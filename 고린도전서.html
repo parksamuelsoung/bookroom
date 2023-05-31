@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>고린도전서</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <button onclick="기본책장()">기본 책장</button>
+  <button onclick="성경()">성경</button><br><br>
+  <h1>고린도전서</h1>
+
+  <label for="chapterNumber">장:</label>
+  <input type="number" id="chapterNumber" min="0" max="13">
+  <button onclick="lookupChapter()">검색</button><br><br>
+  <iframe id="chapterContent" style="width: 100%; height: 400px; border: none;"></iframe>
+
+  <script>
+    var chapter = {
+      "0": "0장: 역사<br><br>저자: 느헤미야이다. 그는 페르시아와 바빌론의 왕 아닥사스다의 술 맡은 시종이었다(느 1:11).<br><br>기록 시기: 주전 433년 이후이다.<br><br>기록 장소: 예루살렘이다.<br><br>다루는 기간: 이 책이 다루는 기간은 적어도 12년간으로, 주전 445년부터 주전 433년까지 곧 페르시아와 마밀론의 왕 아닥사스다 제이십 년(느 1:1)부터 제삼십이 년 어느 때(느 13:6-7)까지이다.<br><br>주제: 하나님의 경륜의 성취를 위한 그분의 증거를 위해 하나님의 선민 가운데서 회복이 계속되도록 예류살렘성의 성벽을 재건함",
+      "1": "Chapter 1: fill in for chapter",
+    };
+
+    function lookupChapter() {
+      var input = document.getElementById("chapterNumber").value;
+      if (chapter.hasOwnProperty(input)) {
+        var chapterText = chapter[input];
+        document.getElementById("chapterContent").srcdoc = chapterText;
+      } else {
+        alert("Chapter '" + input + "' is not valid.");
+      }
+    }
+  </script>
+
+</body>
+</html>
+
+
+
