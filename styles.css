@@ -1,9 +1,16 @@
 
 
-
+/* Default font for desktop */
 body {
-  font-family: Calibri;
-  margin: 50px;
+  font-family: Calibri, Arial, sans-serif;
+  margin: 100px;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+  body {
+    font-family: Arial, sans-serif;
+  }
 }
 
 
