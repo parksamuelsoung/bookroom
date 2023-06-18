@@ -8,13 +8,11 @@ body {
 
 
 h1 {
-  font-family: Calibri;
   color: #333;
   font-size: 50px;
 }
 
 button {
-  font-family: Calibri;
   padding: 10px 20px;
   font-size: 16px;
 }
