@@ -3,7 +3,7 @@
 /* Default font for desktop */
 body {
   font-family: Calibri, Arial, sans-serif;
-  margin: 100px;
+  margin: 100%;
 }
 
 /* Media query for mobile devices */
