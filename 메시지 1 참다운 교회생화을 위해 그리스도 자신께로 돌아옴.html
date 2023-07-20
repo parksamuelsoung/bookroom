@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>메시지 1 참다운 교회생화을 위해 그리스도 자신께로 돌아옴</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <button onclick="기본책장()">기본책장</button>
+  <button onclick="아침_부흥을_위한_거룩한_말씀()">아침 부흥을 위한 거룩한 말씀</button><br><br>
+  <h1>메시지 1 참다운 교회생활을 위해 그리스도 자신께로 돌아옴</h1>
+
+  <label for="chapterNumber">개요:</label>
+  <input type="number" id="chapterNumber" min="0" max="6">
+  <button onclick="lookupChapter()">검색</button>&nbsp&nbsp&nbsp
+  <!-- Set the font size directly in the iframe -->
+  <iframe id="chapterContent" style="width: 100%; height: 500px; border: none; font-size: 20px;"></iframe>
+
+  <script>
+    var chapter = {
+      "0": `<a style="font-size: 50px;">메시지 1 참다운 교회생활을 위해 그리스도 자신께로 돌아옴</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "1": `<a style="font-size: 50px;">1주 1일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "2": `<a style="font-size: 50px;">1주 2일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "3": `<a style="font-size: 50px;">1주 3일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "4": `<a style="font-size: 50px;">1주 4일</a><br><br><a style="font-size: 50px;">느헤미</a>`,
+      "5": `<a style="font-size: 50px;">1주 5일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "6": `<a style="font-size: 50px;">1주 6일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`
+    };
+    
+    function lookupChapter() {
+      var chapterInput = document.getElementById("chapterNumber").value;
+      if (chapter.hasOwnProperty(chapterInput)) {
+        var chapterText = chapter[chapterInput];
+        // Set the font size directly in the content of the iframe
+        document.getElementById("chapterContent").srcdoc = chapterText;
+      } else {
+        alert("Chapter '" + chapterInput + "' is not valid.");
+      }
+    }
+  </script>
+</body>
+</html>
+
