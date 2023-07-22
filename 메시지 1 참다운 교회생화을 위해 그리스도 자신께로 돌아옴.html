@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>메시지 1 참다운 교회생화을 위해 그리스도 자신께로 돌아옴</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js"></script>
+</head>
+
+<body>
+  <button onclick="Bookroom()">기본책장</button><br>
+  <button onclick="아침_부흥을_위한_거룩한_말씀()">아침 부흥을 위한 거룩한 말씀</button><br><br>
+  <h1>메시지 1 참다운 교회생활을 위해 그리스도 자신께로 돌아옴</h1>
+
+  <label for="chapterNumber">개요: 번호 1 부터 6 까지 며칠을 맞춰서 검색하세요.<br> 0 은 개요.</label>
+  <input type="number" id="chapterNumber" min="0" max="6">
+  <button onclick="lookupChapter()">검색</button>&nbsp&nbsp&nbsp
+  <!-- Set the font size directly in the iframe -->
+  <iframe id="chapterContent" style="width: 100%; height: 500px; border: none; font-size: 20px;"></iframe>
+
+  <script>
+    var chapter = {
+      "0": `<a style="font-size: 50px;">메시지 1 참다운 교회생활을 위해 그리스도 자신께로 돌아옴</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "1": `<a style="font-size: 50px;">1주 1일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "2": `<a style="font-size: 50px;">1주 2일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "3": `<a style="font-size: 50px;">1주 3일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "4": `<a style="font-size: 50px;">1주 4일</a><br><br><a style="font-size: 50px;">아침의 누림
+<br><br>엡 3:8 하나님께서 모든 성도들 중에 가장 장은 이보다 더 작은 나에게 이 은혜를 주신 것은, 그리스도의 측량할 수 없는 풍성을 이방인들에게 복음으로 전하게 하시고<br>고전 1:2 고린도에 있는 하난님의 교회 곧 그리스도 예수님 안에서 거룩하여진 부름받은 성도들에게와, 각처에서 ... 우리 주 예수 그리스도의 이름을 부르는 모든 이들에게도 함께 편지합니다.<br>12:27 여러분이 곧 기리스도의 몸이며, 여러분 각 사람은 그 지체들입니다.<br><br>우리가 하는 모든 것에서 그리스도를 적용하고 우리에게 모든 것이신 그리스도를 체험하기 위해, 우리는 그리스도께서 누구이신지에 대한 계시가 필요할 뿐 아니라 우리 자신을 끝내는 것이 필요하다. 바울은 ... 골로새서에서 이것을 여러 번 언급했다. 그는 우리가 죽었다는 것과, 장사되었다는 것과, 옛사람을 벗어 버렸다는 것과, 할례 받았다는 것을 말했다. 왜 바울은 이 모든 체험들을 언급했는가? 바울은 하나님의 의도가 우리를 끝내는 것이며 사실상 우리가 이미 끝났다는 것을 우리에게 분명히 밝혀 주려고 이러한 체험들을 우리에게 언급했다. ... 우리가 '나가야만' 그리스도께서 들어오실 수 있다. 우리가 보좌에서 내려와야만 그리스도께서 왕관을 쓰실수 있다. 우리가 끝나야만 그리스도께서 우리에게 모든 것이 되실 수 있다.<br><br>오늘의 읽을 말씀<br><br>바울은</a>`,
+      "5": `<a style="font-size: 50px;">1주 5일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`,
+      "6": `<a style="font-size: 50px;">1주 6일</a><br><br><a style="font-size: 50px;">아직 없어요!!!</a>`
+    };
+    
+    function lookupChapter() {
+      var chapterInput = document.getElementById("chapterNumber").value;
+      if (chapter.hasOwnProperty(chapterInput)) {
+        var chapterText = chapter[chapterInput];
+        // Set the font size directly in the content of the iframe
+        document.getElementById("chapterContent").srcdoc = chapterText;
+      } else {
+        alert("Chapter '" + chapterInput + "' is not valid.");
+      }
+    }
+  </script>
+</body>
+</html>
+
