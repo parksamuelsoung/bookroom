@@ -56,7 +56,7 @@ function getSong(song, 노래) {
       var text = iframeDoc.getElementsByTagName("b");
       for (var i = 0; i < links.length; i++) {
         text[i].style.fontSize = "50px";
-        text[i].style.fontFamily = "Calibri";
+        text[i].style.fontFamily = "Sans-Serif";
       }
       for (var i = 0; i < links.length; i++) {
         links[i].style.textDecoration = "none";
