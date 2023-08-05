@@ -21,6 +21,17 @@ function SingingWithGrace() {
 
 
 // Songs
+
+function toggleDropdown() {
+  var dropdown = document.querySelector(".dropdown-content");
+  if (dropdown.style.display === "block") {
+    dropdown.style.display = "none";
+  } else {
+    dropdown.style.display = "block";
+  }
+}
+
+
 function filterSongs(inputId, dropdownIndex) {
   var input, filter, div, a, i, txtValue;
   input = document.getElementById(inputId);
