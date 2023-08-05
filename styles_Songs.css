@@ -66,11 +66,7 @@ label {
 }
 
 .dropdown-content {
-<<<<<<< HEAD
-  font-family: Calibri, Arial, sans-serif;
-=======
-  font-family:Calibri, Arial, sans-serif;
->>>>>>> workspace1
+  font-family:Calibri;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
