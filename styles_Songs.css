@@ -1,18 +1,16 @@
 
-// styles_Songs.css
+/* styles_Songs.css */
 
 
 
-// from Songs
 
 
-
+/* Songs */
 
 body {
   font-family: Calibri;
   margin: 50px;
 }
-
 
 h1 {
   font-family: Calibri;
@@ -29,12 +27,6 @@ button {
 label {
   font-size: 50px;
 }
-
-
-
-
-/* Songs */
-
 
 #googleDoc {
   width: 110%;
@@ -57,11 +49,8 @@ label {
 
 
 
-// from Singing with grace
-
 
 /* Singing with Grace */
-
 
 .dropdown {
 }
