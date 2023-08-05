@@ -3,9 +3,7 @@
 
 
 
-
-
-/* Songs */
+/* -r */
 
 body {
   font-family: Calibri;
@@ -22,7 +20,17 @@ button {
   font-size: 50px;
   height: 200px;
   width: 800px;
+  border-radius: 50px;
 }
+
+#button2 {
+  border: none;
+  width: 400px;
+  border-radius: 50px;
+}
+
+
+/* Songs */
 
 label {
   font-size: 50px;
@@ -44,7 +52,6 @@ label {
   height: 100%;
   overflow: hidden;
 }
-
 
 
 
