@@ -2,26 +2,30 @@
 
 
 body {
-  font-family: Calibri;
+  font-family:Calibri, Arial, sans-serif;
   margin: 50px;
 }
 
 h1 {
+  font-family:Calibri, Arial, sans-serif;
   color: #333;
   font-size: 140px;
 }
 
 p {
+  font-family:Calibri, Arial, sans-serif;
   font-size: 100px;
 }
 
 button {
+  font-family:Calibri, Arial, sans-serif;
   font-size: 50px;
   height: 200px;
   width: 800px;
 }
 
 label {
+  font-family:Calibri, Arial, sans-serif;
   font-size: 50px;
 }
 
