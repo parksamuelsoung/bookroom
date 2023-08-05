@@ -63,7 +63,7 @@ label {
 }
 
 .dropdown-content {
-  font-family: Calibri, Sans-Serif;
+  font-family: Calibri, Arial, sans-serif;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
