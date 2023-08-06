@@ -22,8 +22,8 @@ function SingingWithGrace() {
 
 // Songs
 
-function toggleDropdown() {
-  var dropdown = document.querySelector(".dropdown-content");
+function toggleDropdown1() {
+  var dropdown = document.querySelector(".dropdown-content1");
   if (dropdown.style.display === "block") {
     dropdown.style.display = "none";
   } else {
@@ -31,12 +31,20 @@ function toggleDropdown() {
   }
 }
 
+function toggleDropdown2() {
+  var dropdown = document.querySelector(".dropdown-content2");
+  if (dropdown.style.display === "block") {
+    dropdown.style.display = "none";
+  } else {
+    dropdown.style.display = "block";
+  }
+}
 
 function filterSongs(inputId, dropdownIndex) {
   var input, filter, div, a, i, txtValue;
   input = document.getElementById(inputId);
   filter = input.value.toUpperCase();
-  div = document.getElementsByClassName("dropdown-content")[dropdownIndex];
+  div = document.getElementsByClassName("dropdown-content1")[dropdownIndex];
   a = div.getElementsByTagName("a");
   for (i = 0; i < a.length; i++) {
     txtValue = a[i].textContent || a[i].innerText;
@@ -96,7 +104,17 @@ document.getElementById("노래검색").addEventListener("keyup", function() {
   filterSongs("노래검색", 1);
 });
 
-var songLinks = document.querySelectorAll(".dropdown-content a");
+var songLinks = document.querySelectorAll(".dropdown-content1 a");
+for (var i = 0; i < songLinks.length; i++) {
+  songLinks[i].addEventListener("click", function(event) {
+    event.preventDefault();
+    var song = this.innerText;
+    var 노래 = this.parentNode.parentNode.classList.contains("korean-songs");
+    getSong(song, 노래);
+  });
+}
+
+var songLinks = document.querySelectorAll(".dropdown-content2 a");
 for (var i = 0; i < songLinks.length; i++) {
   songLinks[i].addEventListener("click", function(event) {
     event.preventDefault();
