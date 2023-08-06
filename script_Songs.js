@@ -20,26 +20,51 @@ function SingingWithGrace() {
 }
 
 
-// Songs
+/* Songs */
 
+// closes dropdown2 if dropdown1 is clicked and vice versa
 function toggleDropdown1() {
-  var dropdown = document.querySelector(".dropdown-content1");
-  if (dropdown.style.display === "block") {
-    dropdown.style.display = "none";
+  var dropdown2 = document.querySelector(".dropdown-content2");
+  var dropdown1 = document.querySelector(".dropdown-content1");
+  if (dropdown1.style.display === "block") {
+    dropdown1.style.display = "none";
   } else {
-    dropdown.style.display = "block";
+    dropdown2.style.display = "none";
+    dropdown1.style.display = "block";
   }
 }
-
 function toggleDropdown2() {
-  var dropdown = document.querySelector(".dropdown-content2");
-  if (dropdown.style.display === "block") {
-    dropdown.style.display = "none";
+  var dropdown1 = document.querySelector(".dropdown-content1");
+  var dropdown2 = document.querySelector(".dropdown-content2");
+  if (dropdown2.style.display === "block") {
+    dropdown2.style.display = "none";
   } else {
-    dropdown.style.display = "block";
+    dropdown1.style.display = "none";
+    dropdown2.style.display = "block";
   }
 }
 
+// closes menus if user clicks anywhere else on page
+document.addEventListener("click", function (event) {
+  var dropdown1 = document.querySelector(".dropdown-content1");
+  var dropdown2 = document.querySelector(".dropdown-content2");
+
+  if (
+    !event.target.matches(".dropbtnSearch") &&
+    !event.target.closest(".dropdown-content1")
+  ) {
+    dropdown1.style.display = "none";
+  }
+
+  if (
+    !event.target.matches(".dropbtn검색") &&
+    !event.target.closest(".dropdown-content2")
+  ) {
+    dropdown2.style.display = "none";
+  }
+});
+
+// filters song numbers and titles
 function filterSongs(inputId, dropdownIndex) {
   var input, filter, div, a, i, txtValue;
   input = document.getElementById(inputId);
@@ -104,9 +129,9 @@ document.getElementById("노래검색").addEventListener("keyup", function() {
   filterSongs("노래검색", 1);
 });
 
-var songLinks = document.querySelectorAll(".dropdown-content1 a");
-for (var i = 0; i < songLinks.length; i++) {
-  songLinks[i].addEventListener("click", function(event) {
+var songLinks1 = document.querySelectorAll(".dropdown-content1 a");
+for (var i = 0; i < songLinks1.length; i++) {
+  songLinks1[i].addEventListener("click", function(event) {
     event.preventDefault();
     var song = this.innerText;
     var 노래 = this.parentNode.parentNode.classList.contains("korean-songs");
@@ -114,9 +139,9 @@ for (var i = 0; i < songLinks.length; i++) {
   });
 }
 
-var songLinks = document.querySelectorAll(".dropdown-content2 a");
-for (var i = 0; i < songLinks.length; i++) {
-  songLinks[i].addEventListener("click", function(event) {
+var songLinks2 = document.querySelectorAll(".dropdown-content2 a");
+for (var i = 0; i < songLinks2.length; i++) {
+  songLinks2[i].addEventListener("click", function(event) {
     event.preventDefault();
     var song = this.innerText;
     var 노래 = this.parentNode.parentNode.classList.contains("korean-songs");
