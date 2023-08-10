@@ -63,8 +63,7 @@ label {
 
 /* Singing with Grace */
 
-.dropdown {
-}
+
 
 .dropdown-content1 {
   font-family:Calibri;
@@ -127,12 +126,6 @@ label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-
-.dropdown:hover .dropdown-content {
-  display: block;
-  width: 800px;
 }
 
 button.dropbtnSearch {
