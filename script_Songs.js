@@ -101,6 +101,7 @@ function getSong(song, 노래) {
       for (var i = 0; i < links.length; i++) {
         text[i].style.fontSize = "40px";
         text[i].style.fontFamily = "Sans-Serif";
+        text[i].style.fontWeight = "normal";
       }
       for (var i = 0; i < links.length; i++) {
         links[i].style.textDecoration = "none";
