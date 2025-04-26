@@ -74,6 +74,54 @@ button:hover {
 }
 
 
+/* Small screens (phones) */
+@media (max-width: 600px) {
+  form {
+    gap: 6px; /* smaller gap on small screens */
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  button {
+    height: 2.5em;
+    font-size: 0.9rem;
+  }
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 900px) {
+  form {
+    gap: 8px; /* medium gap on tablets */
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  button {
+    height: 3em;
+    font-size: 1rem;
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 901px) {
+  form {
+    gap: 12px; /* bigger gap on big screens */
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  button {
+    height: 3.5em;
+    font-size: 1.1rem;
+  }
+}
+
+
+
+
 
 
 
