@@ -6,36 +6,44 @@
 <head>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bookroom</title>
-  <link rel="stylesheet" href="styles.css"e>
+  <link rel="stylesheet" href="styles.css">
   <script src="script.js"></script>
 </head>
-<body>
-  <h1>Bookroom v2</h1>
-  <p>기본 책장</p>
-  <input id="username" type="text" placeholder="Username"><br>
-  <input id="password" type="password" placeholder="Password"><br><br>
-  <button onclick="login()">Login</button>
 
-  <script>
 
-    function login() {
-      var usernameInput = document.getElementById("username").value;
-      var passwordInput = document.getElementById("password").value;
+  <body>
+    <div class="form-container">
+      <h1>Bookroom v2</h1>
+      <p>기본 책장</p>
+        <form>
+          <input id="username" type="text" placeholder="Username"><br>
+          <input id="password" type="password" placeholder="Password"><br><br>
+          <button onclick="login()">Login</button>
+        </form>  
+    </div>
 
-      // Dictionary containing username and password key-value pairs
-      var userCredentials = {
-        "admin": "admin",
-        "boca": "raton"
-        // Add more usernames and passwords here
-      };
 
-      // Check if the username exists in the dictionary and if the password matches
-      if (userCredentials.hasOwnProperty(usernameInput) && userCredentials[usernameInput] === passwordInput) {
+    <script>
+      function login() {
+        var usernameInput = document.getElementById("username").value;
+        var passwordInput = document.getElementById("password").value;
+
+        // Dictionary containing username and password key-value pairs
+        var userCredentials = {
+          "admin": "admin",
+          "boca": "raton"
+          // Add more usernames and passwords here
+        };
+
+        // Check if the username exists in the dictionary and if the password matches
+        if (userCredentials.hasOwnProperty(usernameInput) && userCredentials[usernameInput] === passwordInput) {
         Bookroom();
-      } else {
-        alert("Invalid Username/Password!");
+        } else {
+          alert("Invalid Username/Password!");
+        }
       }
-    }
-  </script>
-</body>
+    </script>
+  </body>
+
+
 </html>
