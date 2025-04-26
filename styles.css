@@ -4,17 +4,18 @@
 body {
   font-family:Calibri, Arial, sans-serif;
   margin: 50px;
+
 }
 
 h1 {
   font-family:Calibri, Arial, sans-serif;
   color: #333;
-  font-size: 140px;
+  style="font-size: 6vw:";
 }
 
 p {
   font-family:Calibri, Arial, sans-serif;
-  font-size: 100px;
+    
 }
 
 button {
