@@ -36,14 +36,27 @@ form {
 input[type="text"],
 input[type="email"],
 input[type="password"], /* Added password field */
+/* Base button styling */
 button {
   all: unset;
-  width: 100%;
-  padding: 0.2em 1em;
+  display: block;
+  width: auto;
+  max-width: 100%;
+  padding: 0.5em 1.2em;
+  margin-top: 0.5em;
   border-radius: 6px;
-  font-size: 1rem;
-  box-sizing: border-box;
+  font-size: 0.95rem;
+  background-color: #007bff;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
 }
+
+button:hover {
+  background-color: #0056b3;
+}
+
 
 /* Specific styles for inputs */
 input[type="text"],
@@ -60,19 +73,6 @@ input[type="password"]:focus { /* Focus styles for password added */
   outline: none;
 }
 
-/* Button styling */
-button {
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.2s ease;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
 
 /* Small screens (phones) */
 @media (max-width: 600px) {
@@ -84,8 +84,8 @@ button:hover {
   input[type="email"],
   input[type="password"],
   button {
-    height: 2.5em;
-    font-size: 0.9rem;
+    padding: 0.4em 1em;
+    font-size: 0.85rem;
   }
 }
 
@@ -99,7 +99,7 @@ button:hover {
   input[type="email"],
   input[type="password"],
   button {
-    height: 3em;
+    padding: 0.6em 1.2em;
     font-size: 1rem;
   }
 }
@@ -114,8 +114,8 @@ button:hover {
   input[type="email"],
   input[type="password"],
   button {
-    height: 3.5em;
-    font-size: 1.1rem;
+    padding: 0.8em 1.4em;
+    font-size: 1.2rem;
   }
 }
 
