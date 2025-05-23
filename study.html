@@ -1,22 +1,169 @@
 
 
+
 <!DOCTYPE html>
 <html>
 <head>
   <title>Study</title>
   <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="script.js"></script>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    .form-container { max-width: 600px; margin: auto; }
+    select, input, button { margin-top: 10px; display: block; width: 100%; }
+    .hidden { display: none; }
+    .verse-select { margin-bottom: 20px; }
+  </style>
 </head>
 
-
 <body>
-
-  <button onclick="Bookroom()">Bookroom</button><br><br>
-
   <div class="form-container">
-    <h1>Study</h1>
+    <h1>Verse Study Quiz</h1>
 
+    <!-- Mode Selection -->
+    <label for="mode">Mode:</label>
+    <select id="mode">
+      <option value="copy">Copy</option>
+      <option value="memorize">Memorize</option>
+    </select>
+
+    <!-- Verse Selection -->
+    <div class="verse-select">
+      <label>Select Book:</label>
+      <select id="bookSelect" onchange="loadChapters()">
+        <option value="">--Choose Book--</option>
+        <option value="John">John</option>
+        <!-- Add more books -->
+      </select>
+
+      <label>Select Chapter:</label>
+      <select id="chapterSelect" onchange="loadVerses()">
+        <option value="">--Choose Chapter--</option>
+      </select>
+
+      <label>Select Verse:</label>
+      <select id="verseSelect">
+        <option value="">--Choose Verse--</option>
+      </select>
+
+      <button onclick="addVerse()">Add Verse</button>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quizSection" class="hidden">
+      <p id="questionDisplay"></p>
+      <input type="text" id="userInput" placeholder="Type here">
+      <button onclick="submitAnswer()">Submit</button>
+    </div>
+
+    <button onclick="startQuiz()">Start Quiz</button>
+    <p id="status"></p>
   </div>
+
+  <script>
+    const bibleVerses = {
+      "John": {
+        "3": {
+          "16": "For God so loved the world that he gave his one and only Son, that whoever believes in him shall not perish but have eternal life.",
+          "17": "For God did not send his Son into the world to condemn the world, but to save the world through him."
+        }
+        // Add more chapters and verses
+      }
+    };
+
+    const selectedVerses = {};
+    let currentQueue = [];
+    let currentVerse = null;
+
+    function loadChapters() {
+      const book = document.getElementById("bookSelect").value;
+      const chapterSelect = document.getElementById("chapterSelect");
+      chapterSelect.innerHTML = '<option value="">--Choose Chapter--</option>';
+      if (bibleVerses[book]) {
+        for (let chapter in bibleVerses[book]) {
+          chapterSelect.innerHTML += `<option value="${chapter}">${chapter}</option>`;
+        }
+      }
+    }
+
+    function loadVerses() {
+      const book = document.getElementById("bookSelect").value;
+      const chapter = document.getElementById("chapterSelect").value;
+      const verseSelect = document.getElementById("verseSelect");
+      verseSelect.innerHTML = '<option value="">--Choose Verse--</option>';
+      if (bibleVerses[book] && bibleVerses[book][chapter]) {
+        for (let verse in bibleVerses[book][chapter]) {
+          verseSelect.innerHTML += `<option value="${verse}">${verse}</option>`;
+        }
+      }
+    }
+
+    function addVerse() {
+      const book = document.getElementById("bookSelect").value;
+      const chapter = document.getElementById("chapterSelect").value;
+      const verse = document.getElementById("verseSelect").value;
+
+      if (!book || !chapter || !verse) return;
+
+      const ref = `${book} ${chapter}:${verse}`;
+      if (!selectedVerses[ref]) {
+        selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
+      }
+
+      document.getElementById("status").textContent = `Added: ${ref}`;
+    }
+
+    function startQuiz() {
+      currentQueue = Object.entries(selectedVerses).filter(([_, data]) => data.correctCount < 3);
+      if (currentQueue.length === 0) {
+        alert("Please add verses to study.");
+        return;
+      }
+      document.getElementById("quizSection").classList.remove("hidden");
+      showNextQuestion();
+    }
+
+    function showNextQuestion() {
+      if (currentQueue.length === 0) {
+        document.getElementById("questionDisplay").textContent = "Congratulations! You've mastered all verses.";
+        document.getElementById("quizSection").classList.add("hidden");
+        return;
+      }
+
+      const randomIndex = Math.floor(Math.random() * currentQueue.length);
+      currentVerse = currentQueue[randomIndex];
+      const mode = document.getElementById("mode").value;
+
+      const ref = currentVerse[0];
+      const text = currentVerse[1].text;
+
+      document.getElementById("userInput").value = "";
+      document.getElementById("questionDisplay").textContent = mode === "copy" ? `${ref}: ${text}` : ref;
+    }
+
+    function submitAnswer() {
+      const input = document.getElementById("userInput").value.trim();
+      const mode = document.getElementById("mode").value;
+      const ref = currentVerse[0];
+      const text = currentVerse[1].text;
+      const correctAnswer = `${ref} ${text}`;
+
+      if (input === correctAnswer) {
+        selectedVerses[ref].correctCount++;
+        if (selectedVerses[ref].correctCount >= 3) {
+          delete currentQueue.find(([key]) => key === ref);
+        }
+        document.getElementById("status").textContent = `Correct! (${ref})`;
+      } else {
+        document.getElementById("status").textContent = `Incorrect. (${ref})`;
+      }
+
+      // Refresh the queue for updated counts
+      currentQueue = Object.entries(selectedVerses).filter(([_, data]) => data.correctCount < 3);
+      showNextQuestion();
+    }
+  </script>
 </body>
 </html>
+
+
+
+
