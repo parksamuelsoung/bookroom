@@ -57,6 +57,11 @@ button:hover {
   background-color: #0056b3;
 }
 
+button:not(.dropbtn) {
+  margin-top: 0.5em; /* or margin-bottom if you prefer */
+}
+
+
 
 /* Specific styles for inputs */
 input[type="text"],
