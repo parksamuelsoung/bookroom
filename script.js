@@ -5,6 +5,10 @@
 
 // 책장
 
+function study() {
+  window.location.href = "study.html";
+}
+
 function Songs() {
   window.location.href = "Songs.html";
 }
