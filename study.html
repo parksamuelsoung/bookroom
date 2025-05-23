@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Study</title>
-  <link rel="stylesheet" href="styles.css">
+  <style>
+    .hidden { display: none; }
+    .highlighted {
+      background-color: rgba(255, 255, 255, 0.3);
+      color: white;
+      backdrop-filter: blur(4px);
+    }
+    .verse-list { margin-top: 1em; }
+  </style>
 </head>
 <body>
   <div class="form-container">
@@ -17,29 +25,16 @@
       <option value="memorize">Memorize</option>
     </select>
 
-    <!-- Verse Selection -->
-    <label for="bookSelect">Select Book:</label>
-    <select id="bookSelect" onchange="loadChapters()">
-      <option value="">--Choose Book--</option>
-      <option value="Genesis">Genesis</option>
-      <option value="Joel">Joel</option>
-      <option value="John">John</option>
-      <option value="Acts">Acts</option>
-      <option value="Romans">Romans</option>
-      <option value="1 Corinthians">1 Corinthians</option>
-    </select>
+    <!-- Dropdown Container -->
+    <div id="dropdownContainer">
+      <!-- Dynamic dropdowns inserted here -->
+    </div>
 
-    <label for="chapterSelect">Select Chapter:</label>
-    <select id="chapterSelect" onchange="loadVerses()">
-      <option value="">--Choose Chapter--</option>
-    </select>
-
-    <label for="verseSelect">Select Verse:</label>
-    <select id="verseSelect">
-      <option value="">--Choose Verse--</option>
-    </select>
-
-    <button onclick="addVerse()">Add Verse</button>
+    <!-- Selected Verses -->
+    <div class="verse-list" id="selectedVersesList">
+      <h3>Selected Verses:</h3>
+      <ul id="verseList"></ul>
+    </div>
 
     <!-- Quiz Section -->
     <div id="quizSection" class="hidden">
@@ -56,17 +51,10 @@
 
     <button onclick="startQuiz()">Start Quiz</button>
     <button onclick="refreshPage()">Reset Quiz</button>
-
     <p id="status"></p>
   </div>
 
   <script>
-    // Resizing textarea
-    function autoResize(textarea) {
-      textarea.style.height = 'auto';
-      textarea.style.height = (textarea.scrollHeight) + 'px';
-    }
-
     const bibleVerses = {
       "Genesis": { "4": { "26": "And to Seth also a son was born..." } },
       "Joel": { "2": { "32": "And everyone who calls on the name..." } },
@@ -76,46 +64,82 @@
       "1 Corinthians": { "1": { "2": "To the church of God which is in Corinth..." } }
     };
 
-    const selectedVerses = {};
-    let currentQueue = [];
+    let selectedVerses = {};
     let currentVerse = null;
+    let currentQueue = [];
 
-    function loadChapters() {
-      const book = document.getElementById("bookSelect").value;
-      const chapterSelect = document.getElementById("chapterSelect");
-      chapterSelect.innerHTML = '<option value="">--Choose Chapter--</option>';
-      if (bibleVerses[book]) {
-        for (let chapter in bibleVerses[book]) {
-          chapterSelect.innerHTML += `<option value="${chapter}">${chapter}</option>`;
-        }
+    function renderDropdown(type, options, onChange, label, showBack = false, backCallback = null) {
+      const container = document.getElementById("dropdownContainer");
+      container.innerHTML = '';
+
+      const labelElem = document.createElement("label");
+      labelElem.textContent = label;
+
+      const select = document.createElement("select");
+      const defaultOption = document.createElement("option");
+      defaultOption.value = '';
+      defaultOption.textContent = `--Choose ${label}--`;
+      select.appendChild(defaultOption);
+
+      options.forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt;
+        select.appendChild(option);
+      });
+
+      select.addEventListener('change', () => onChange(select.value));
+
+      container.appendChild(labelElem);
+      if (showBack) {
+        const backBtn = document.createElement("button");
+        backBtn.textContent = '← Back';
+        backBtn.onclick = backCallback;
+        container.appendChild(backBtn);
       }
+      container.appendChild(select);
     }
 
-    function loadVerses() {
-      const book = document.getElementById("bookSelect").value;
-      const chapter = document.getElementById("chapterSelect").value;
-      const verseSelect = document.getElementById("verseSelect");
-      verseSelect.innerHTML = '<option value="">--Choose Verse--</option>';
-      if (bibleVerses[book] && bibleVerses[book][chapter]) {
-        for (let verse in bibleVerses[book][chapter]) {
-          verseSelect.innerHTML += `<option value="${verse}">${verse}</option>`;
-        }
-      }
+    function showBooks() {
+      const books = Object.keys(bibleVerses);
+      renderDropdown('book', books, book => {
+        if (book) showChapters(book);
+      }, 'Book');
     }
 
-    function addVerse() {
-      const book = document.getElementById("bookSelect").value;
-      const chapter = document.getElementById("chapterSelect").value;
-      const verse = document.getElementById("verseSelect").value;
+    function showChapters(book) {
+      const chapters = Object.keys(bibleVerses[book]);
+      renderDropdown('chapter', chapters, chapter => {
+        if (chapter) showVerses(book, chapter);
+      }, 'Chapter', true, showBooks);
+    }
 
-      if (!book || !chapter || !verse) return;
+    function showVerses(book, chapter) {
+      const verses = Object.keys(bibleVerses[book][chapter]);
+      renderDropdown('verse', verses, verse => {
+        if (verse) {
+          addVerse(book, chapter, verse);
+          showBooks(); // return to start
+        }
+      }, 'Verse', true, () => showChapters(book));
+    }
 
+    function addVerse(book, chapter, verse) {
       const ref = `${book} ${chapter}:${verse}`;
       if (!selectedVerses[ref]) {
         selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
+        const li = document.createElement("li");
+        li.textContent = `${ref}: ${selectedVerses[ref].text}`;
+        li.classList.add("highlighted");
+        document.getElementById("verseList").appendChild(li);
       }
 
       document.getElementById("status").textContent = `Added: ${ref}`;
+    }
+
+    function autoResize(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = textarea.scrollHeight + 'px';
     }
 
     function startQuiz() {
@@ -167,6 +191,10 @@
     function refreshPage() {
       window.location.reload();
     }
+
+    // Initialize
+    showBooks();
   </script>
 </body>
 </html>
+
