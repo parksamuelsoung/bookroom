@@ -1,0 +1,22 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Study</title>
+  <meta charset="UTF-8">
+  <script src="script.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+
+<body>
+
+  <button onclick="Bookroom()">Bookroom</button><br><br>
+
+  <div class="form-container">
+    <h1>Study</h1>
+
+  </div>
+</body>
+</html>
