@@ -196,15 +196,11 @@
       // Refresh the queue for updated counts
       currentQueue = Object.entries(selectedVerses).filter(([_, data]) => data.correctCount < 3);
       showNextQuestion();
-
-function refreshPage() {
-  window.location.reload();
-}
-
-
-      
     }
 
+    function refreshPage() {
+      window.location.reload();
+    }
 
 
     
