@@ -3,15 +3,99 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Study</title>
+  <title>Verse Study Quiz</title>
   <style>
-    .hidden { display: none; }
+    /* Your provided CSS */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-container {
+      width: 90%;
+      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    select,
+    textarea {
+      width: 100%;
+      padding: 0.6em 1em;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      background-color: white;
+      color: #222;
+      font-size: 1rem;
+      line-height: 1.4;
+      margin-top: 1em;
+    }
+
+    button {
+      display: block;
+      margin: 1.5em auto 0;
+      padding: 0.6em 1.5em;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .verse-list {
+      text-align: left;
+      margin-top: 2em;
+    }
+
+    .verse-list ul {
+      list-style-type: disc;
+      margin-left: 1.5em;
+    }
+
     .highlighted {
       background-color: rgba(255, 255, 255, 0.3);
       color: white;
       backdrop-filter: blur(4px);
+      padding: 0.5em;
+      border-radius: 4px;
     }
-    .verse-list { margin-top: 1em; }
+
+    @media (max-width: 600px) {
+      select,
+      button,
+      textarea {
+        font-size: 0.9rem;
+        padding: 0.5em 1em;
+      }
+    }
+
+    @media (min-width: 901px) {
+      select,
+      button,
+      textarea {
+        font-size: 1.1rem;
+        padding: 0.75em 1.5em;
+      }
+    }
   </style>
 </head>
 <body>
@@ -26,9 +110,7 @@
     </select>
 
     <!-- Dropdown Container -->
-    <div id="dropdownContainer">
-      <!-- Dynamic dropdowns inserted here -->
-    </div>
+    <div id="dropdownContainer"></div>
 
     <!-- Selected Verses -->
     <div class="verse-list" id="selectedVersesList">
@@ -43,7 +125,6 @@
         id="userInput" 
         placeholder="Type here"
         oninput="autoResize(this)"
-        style="width: 90%; overflow:hidden; resize:none; min-height: 3em;"
         rows="1"
       ></textarea>
       <button onclick="submitAnswer()">Submit</button>
@@ -65,38 +146,35 @@
     };
 
     let selectedVerses = {};
-    let currentVerse = null;
     let currentQueue = [];
+    let currentVerse = null;
 
     function renderDropdown(type, options, onChange, label, showBack = false, backCallback = null) {
       const container = document.getElementById("dropdownContainer");
       container.innerHTML = '';
 
       const labelElem = document.createElement("label");
-      labelElem.textContent = label;
+      labelElem.textContent = `Select ${label}:`;
+      container.appendChild(labelElem);
 
       const select = document.createElement("select");
-      const defaultOption = document.createElement("option");
-      defaultOption.value = '';
-      defaultOption.textContent = `--Choose ${label}--`;
-      select.appendChild(defaultOption);
-
+      select.innerHTML = `<option value="">--Choose ${label}--</option>`;
       options.forEach(opt => {
         const option = document.createElement("option");
         option.value = opt;
         option.textContent = opt;
         select.appendChild(option);
       });
-
       select.addEventListener('change', () => onChange(select.value));
 
-      container.appendChild(labelElem);
-      if (showBack) {
+      if (showBack && backCallback) {
         const backBtn = document.createElement("button");
         backBtn.textContent = '← Back';
+        backBtn.style.marginTop = '1em';
         backBtn.onclick = backCallback;
         container.appendChild(backBtn);
       }
+
       container.appendChild(select);
     }
 
@@ -172,10 +250,8 @@
 
     function submitAnswer() {
       const input = document.getElementById("userInput").value.trim();
-      const mode = document.getElementById("mode").value;
       const ref = currentVerse[0];
-      const text = currentVerse[1].text;
-      const correctAnswer = `${ref} ${text}`;
+      const correctAnswer = `${ref} ${currentVerse[1].text}`;
 
       if (input === correctAnswer) {
         selectedVerses[ref].correctCount++;
@@ -189,12 +265,6 @@
     }
 
     function refreshPage() {
-      window.location.reload();
-    }
+      window.location.reload
 
-    // Initialize
-    showBooks();
-  </script>
-</body>
-</html>
 
