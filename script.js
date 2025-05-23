@@ -27,6 +27,16 @@ function 메시지() {
 
 
 
+const textarea = document.getElementById('userInput');
+textarea.addEventListener('input', autoResize);
+function autoResize() {
+  this.style.height = 'auto'; // Reset height
+  this.style.height = this.scrollHeight + 'px'; // Set to scroll height
+}
+
+
+
+
 
 // 성경
 function filterBooks(inputId, dropdownIndex) {
