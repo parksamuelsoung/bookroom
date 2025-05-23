@@ -1,19 +1,11 @@
-
-
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Study</title>
-  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    .form-container { max-width: 600px; margin: auto; }
-    select, input, button { margin-top: 10px; display: block; width: 100%; }
-    .hidden { display: none; }
-    .verse-select { margin-bottom: 20px; }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
   <div class="form-container">
     <h1>Verse Study Quiz</h1>
@@ -26,84 +18,62 @@
     </select>
 
     <!-- Verse Selection -->
-    <div class="verse-select">
-      <label>Select Book:</label>
-      <select id="bookSelect" onchange="loadChapters()">
-        <option value="">--Choose Book--</option>
-        <option value="Genesis">Genesis</option>
-        <option value="Joel">Joel</option>
-        <option value="John">John</option>
-        <option value="Acts">Acts</option>
-        <option value="Romans">Romans</option>
-        <option value="1 Corinthians">1 Corinthians</option>
-        <!-- Add more books -->
-      </select>
+    <label for="bookSelect">Select Book:</label>
+    <select id="bookSelect" onchange="loadChapters()">
+      <option value="">--Choose Book--</option>
+      <option value="Genesis">Genesis</option>
+      <option value="Joel">Joel</option>
+      <option value="John">John</option>
+      <option value="Acts">Acts</option>
+      <option value="Romans">Romans</option>
+      <option value="1 Corinthians">1 Corinthians</option>
+    </select>
 
-      <label>Select Chapter:</label>
-      <select id="chapterSelect" onchange="loadVerses()">
-        <option value="">--Choose Chapter--</option>
-      </select>
+    <label for="chapterSelect">Select Chapter:</label>
+    <select id="chapterSelect" onchange="loadVerses()">
+      <option value="">--Choose Chapter--</option>
+    </select>
 
-      <label>Select Verse:</label>
-      <select id="verseSelect">
-        <option value="">--Choose Verse--</option>
-      </select>
+    <label for="verseSelect">Select Verse:</label>
+    <select id="verseSelect">
+      <option value="">--Choose Verse--</option>
+    </select>
 
-      <button onclick="addVerse()">Add Verse</button>
-    </div>
+    <button onclick="addVerse()">Add Verse</button>
 
     <!-- Quiz Section -->
     <div id="quizSection" class="hidden">
       <p id="questionDisplay"></p>
-        <textarea id="userInput" placeholder="Type here" rows="1" style="overflow:hidden; resize:none;"></textarea>
-        <button onclick="submitAnswer()">Submit</button>
+      <textarea 
+        id="userInput" 
+        placeholder="Type here"
+        oninput="autoResize(this)"
+        style="width: 90%; overflow:hidden; resize:none; min-height: 3em;"
+        rows="1"
+      ></textarea>
+      <button onclick="submitAnswer()">Submit</button>
     </div>
 
     <button onclick="startQuiz()">Start Quiz</button>
     <button onclick="refreshPage()">Reset Quiz</button>
-    <p id="status"></p>
 
-    
+    <p id="status"></p>
   </div>
 
-  
-
   <script>
+    // Resizing textarea
+    function autoResize(textarea) {
+      textarea.style.height = 'auto';
+      textarea.style.height = (textarea.scrollHeight) + 'px';
+    }
+
     const bibleVerses = {
-      "Genesis": {
-        "4": {
-          "26": "And to Seth also a son was born, and he called his name Enosh. At that time men began to call upon the name of Jehovah." 
-        }
-      },
-      "Joel": {
-        "2": {
-          "32": "And everyone who calls on the name of Jehovah shall be saved; / For in Mount Zion and in Jerusalem will be an escape, / As Jehovah has said, / Even for the remnant / Whom Jehovah calls."
-        }
-      },
-      "John": {
-        "3": {
-          "16": "For God so loved the world that He gave His only begotten Son, that everyone who believes into Him would not perish, but would have eternal life.",
-          "17": "For God did not send the Son into the world to condemn the world, but that the world might be saved through Him." 
-        }
-      },
-      "Acts": {
-        "2": {
-          "21": "And it shall be that everyone who calls on the name of the Lord shall be saved.”" 
-        }
-      },
-       "Romans": {
-        "10": {
-          "12": "For there is no distinction between Jew and Greek, for the same Lord is Lord of all and rich to all who call upon Him;",
-          "13": "For “whoever calls upon the name of the Lord shall be saved.”" 
-        }
-       },
-       "1 Corinthians": {
-        "1": {
-          "2": "To the church of God which is in Corinth, to those who have been sanctified in Christ Jesus, the called saints, with all those who call upon the name of our Lord Jesus Christ in every place, who is theirs and ours:"
-        }
-       }
-        // Add more chapters and verses
-      
+      "Genesis": { "4": { "26": "And to Seth also a son was born..." } },
+      "Joel": { "2": { "32": "And everyone who calls on the name..." } },
+      "John": { "3": { "16": "For God so loved the world...", "17": "For God did not send the Son..." } },
+      "Acts": { "2": { "21": "And it shall be that everyone..." } },
+      "Romans": { "10": { "12": "For there is no distinction...", "13": "For 'whoever calls...'" } },
+      "1 Corinthians": { "1": { "2": "To the church of God which is in Corinth..." } }
     };
 
     const selectedVerses = {};
@@ -185,29 +155,18 @@
 
       if (input === correctAnswer) {
         selectedVerses[ref].correctCount++;
-        if (selectedVerses[ref].correctCount >= 3) {
-          delete currentQueue.find(([key]) => key === ref);
-        }
+        currentQueue = currentQueue.filter(([key]) => key !== ref);
         document.getElementById("status").textContent = `Correct! (${ref})`;
       } else {
         document.getElementById("status").textContent = `Incorrect. (${ref})`;
       }
 
-      // Refresh the queue for updated counts
-      currentQueue = Object.entries(selectedVerses).filter(([_, data]) => data.correctCount < 3);
       showNextQuestion();
     }
 
     function refreshPage() {
       window.location.reload();
     }
-
-
-    
   </script>
 </body>
 </html>
-
-
-
-
