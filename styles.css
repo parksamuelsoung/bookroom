@@ -32,7 +32,7 @@ form {
   margin-top: 2em;
 }
 
-/* Input field styling */
+/* Input fields */
 input[type="text"],
 input[type="email"],
 input[type="password"] {
@@ -41,9 +41,9 @@ input[type="password"] {
   padding: 0.5em 1em;
   border: 1px solid #ccc;
   border-radius: 6px;
-  font-size: 1rem;
   background-color: white;
-  color: #333;
+  color: #222; /* Ensures text is visible */
+  font-size: 1rem;
   box-sizing: border-box;
 }
 
@@ -52,26 +52,25 @@ input:focus {
   outline: none;
 }
 
+/* Centered and styled button */
 button {
   all: unset;
   display: inline-block;
-  margin: 1em auto 0 auto;
   padding: 0.6em 1.2em;
+  margin: 1em auto 0 auto; /* center below form */
   font-size: 1rem;
   border-radius: 6px;
   background-color: #007bff;
   color: white;
-  text-align: center;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
-
 
 button:hover {
   background-color: #0056b3;
 }
 
-/* Responsive adjustments */
+/* Responsive tweaks */
 @media (max-width: 600px) {
   input,
   button {
