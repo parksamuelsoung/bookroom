@@ -60,8 +60,9 @@
     </div>
 
     <button onclick="startQuiz()">Start Quiz</button>
+    <button onclick="refreshQuiz()">Reset Quiz</button>
     <p id="status"></p>
-    <button onclick="resetQuiz()">Reset Quiz</button>
+
     
   </div>
 
@@ -196,23 +197,10 @@
       currentQueue = Object.entries(selectedVerses).filter(([_, data]) => data.correctCount < 3);
       showNextQuestion();
 
-    function resetQuiz() {
-      // Clear selected verses and current queue
-      for (let key in selectedVerses) {
-        delete selectedVerses[key];
-      }
-      currentQueue = [];
-      currentVerse = null;
+function refreshPage() {
+  window.location.reload();
+}
 
-      // Clear UI and reset input fields
-      document.getElementById("bookSelect").value = "";
-      document.getElementById("chapterSelect").innerHTML = '<option value="">--Choose Chapter--</option>';
-      document.getElementById("verseSelect").innerHTML = '<option value="">--Choose Verse--</option>';
-      document.getElementById("quizSection").classList.add("hidden");
-      document.getElementById("userInput").value = "";
-      document.getElementById("questionDisplay").textContent = "";
-      document.getElementById("status").textContent = "Quiz reset. You may select new verses.";
-    }
 
       
     }
