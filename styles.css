@@ -134,10 +134,14 @@ input[type="password"]:focus { /* Focus styles for password added */
 
 /* 성경 */
 
-.dropdown {
+.dropdown button.dropbtn {
   position: relative;
   display: inline-block;
+  font-size: 50px;
+  height: 200px;
+  width: 800px;
 }
+
 
 .dropdown-content {
   display: none;
@@ -168,11 +172,7 @@ input[type="password"]:focus { /* Focus styles for password added */
   display: block;
 }
 
-button.dropbtn {
-  font-size: 50px;
-  height: 200px;
-  width: 800px;
-}
+
 
 
 
