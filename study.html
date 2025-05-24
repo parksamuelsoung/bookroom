@@ -207,7 +207,7 @@
       if (!selectedVerses[ref]) {
         selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
         const li = document.createElement("li");
-        li.textContent = `${ref}: ${selectedVerses[ref].text}`;
+        li.textContent = `${ref} ${selectedVerses[ref].text}`;
         li.classList.add("highlighted");
         document.getElementById("verseList").appendChild(li);
       }
