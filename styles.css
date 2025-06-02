@@ -202,12 +202,9 @@ label {
 
 
 .dropdown-content1 {
-  font-family:Calibri;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  width: 800px;
-  height: 800px;
   overflow-y: auto;
   overflow-x: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -215,12 +212,9 @@ label {
 }
 
 .dropdown-content2 {
-  font-family:Calibri;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
-  width: 800px;
-  height: 800px;
   overflow-y: auto;
   overflow-x: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
@@ -241,7 +235,6 @@ label {
 }
 
 .dropdown-content1 a {
-  font-family:Calibri, Arial, sans-serif;
   font-size: 50px;
   color: black;
   padding: 12px 16px;
@@ -253,7 +246,6 @@ label {
 }
 
 .dropdown-content2 a {
-  font-family:Calibri, Arial, sans-serif;
   font-size: 50px;
   color: black;
   padding: 12px 16px;
