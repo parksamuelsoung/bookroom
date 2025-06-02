@@ -5,50 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Verse Study Quiz</title>
   <link rel="stylesheet" href="styles.css" />
-  <script src="script.js"></script>
-</head>
-  
-<body>
-  <div class="navbar">
-    <span class="logo" onclick="Bookroom()">Bookroom</span>
-  </div>
-  <div class="form-container">
-    <h1>Verse Study Quiz</h1>
-
-    <!-- Mode Selection -->
-    <label for="mode">Mode:</label>
-    <select id="mode">
-      <option value="copy">Copy</option>
-      <option value="memorize">Memorize</option>
-    </select>
-
-    <!-- Dropdown Container -->
-    <div id="dropdownContainer"></div>
-
-    <!-- Selected Verses -->
-    <div class="verse-list" id="selectedVersesList">
-      <h3>Selected Verses:</h3>
-      <ul id="verseList"></ul>
-    </div>
-
-    <!-- Quiz Section -->
-    <div id="quizSection" class="hidden">
-      <p id="questionDisplay"></p>
-      <textarea 
-        id="userInput" 
-        placeholder="Type here"
-        oninput="autoResize(this)"
-        rows="1"
-      ></textarea>
-      <button onclick="submitAnswer()">Submit</button>
-    </div>
-
-    <button onclick="startQuiz()">Start Quiz</button>
-    <button onclick="refreshPage()">Reset Quiz</button>
-    <p id="status"></p>
-  </div>
-
-  <script>
+  <script defer>
     const bibleVerses = {
       "Genesis": { "4": { "26": "And to Seth also a son was born..." } },
       "Joel": { "2": { "32": "And everyone who calls on the name..." } },
@@ -71,22 +28,36 @@
       container.appendChild(labelElem);
 
       const select = document.createElement("select");
-      select.innerHTML = `<option value="">--Choose ${label}--</option>`;
+
+      if (showBack && backCallback) {
+        const backOption = document.createElement("option");
+        backOption.value = "__back";
+        backOption.textContent = "← Back";
+        select.appendChild(backOption);
+      }
+
+      const promptOption = document.createElement("option");
+      promptOption.value = "";
+      promptOption.disabled = true;
+      promptOption.selected = true;
+      promptOption.textContent = `--Choose ${label}--`;
+      select.appendChild(promptOption);
+
       options.forEach(opt => {
         const option = document.createElement("option");
         option.value = opt;
         option.textContent = opt;
         select.appendChild(option);
       });
-      select.addEventListener('change', () => onChange(select.value));
 
-      if (showBack && backCallback) {
-        const backBtn = document.createElement("button");
-        backBtn.textContent = '← Back';
-        backBtn.style.marginTop = '1em';
-        backBtn.onclick = backCallback;
-        container.appendChild(backBtn);
-      }
+      select.addEventListener('change', () => {
+        const val = select.value;
+        if (val === "__back" && backCallback) {
+          backCallback();
+        } else {
+          onChange(val);
+        }
+      });
 
       container.appendChild(select);
     }
@@ -110,7 +81,7 @@
       renderDropdown('verse', verses, verse => {
         if (verse) {
           addVerse(book, chapter, verse);
-          showBooks(); // return to start
+          showBooks(); // return to book selection after adding
         }
       }, 'Verse', true, () => showChapters(book));
     }
@@ -178,10 +149,51 @@
     }
 
     function refreshPage() {
-      window.location.reload
+      window.location.reload();
     }
 
-    showBooks();
+    window.addEventListener('DOMContentLoaded', showBooks);
+  </script>
+</head>
+<body>
+  <div class="navbar">
+    <span class="logo" onclick="Bookroom()">Bookroom</span>
+  </div>
 
-    </script>
+  <div class="form-container">
+    <h1>Verse Study Quiz</h1>
 
+    <!-- Mode Selection -->
+    <label for="mode">Mode:</label>
+    <select id="mode">
+      <option value="copy">Copy</option>
+      <option value="memorize">Memorize</option>
+    </select>
+
+    <!-- Dropdown Container -->
+    <div id="dropdownContainer"></div>
+
+    <!-- Selected Verses -->
+    <div class="verse-list" id="selectedVersesList">
+      <h3>Selected Verses:</h3>
+      <ul id="verseList"></ul>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quizSection" class="hidden">
+      <p id="questionDisplay"></p>
+      <textarea 
+        id="userInput" 
+        placeholder="Type here"
+        oninput="autoResize(this)"
+        rows="1"
+      ></textarea>
+      <button onclick="submitAnswer()">Submit</button>
+    </div>
+
+    <button onclick="startQuiz()">Start Quiz</button>
+    <button onclick="refreshPage()">Reset Quiz</button>
+    <p id="status"></p>
+  </div>
+</body>
+</html>
