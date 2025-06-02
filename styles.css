@@ -264,24 +264,5 @@ label {
   text-overflow: ellipsis;
 }
 
-button.dropbtnSearch {
-  font-size: 50px;
-  height: 200px;
-  width: 800px;
-}
 
-button.dropbtn검색 {
-  font-size: 50px;
-  height: 200px;
-  width: 800px;
-}
-
-b {
-  font-weight: bold;
-}
-
-
-  .form-container {
-    max-width: 40em; /* ≈ 640px */
-  }
 }
