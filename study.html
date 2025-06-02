@@ -6,11 +6,58 @@
   <title>Verse Study Quiz</title>
   <link rel="stylesheet" href="styles.css" />
   <style>
-    .dropdown-group {
-      margin-bottom: 1em;
+    select {
+      margin: 1em 0;
+      padding: 0.5em;
+      font-size: 1em;
     }
   </style>
-  <script defer>
+</head>
+<body>
+  <div class="navbar">
+    <span class="logo" onclick="Bookroom()">Bookroom</span>
+  </div>
+
+  <div class="form-container">
+    <h1>Verse Study Quiz</h1>
+
+    <!-- Mode Selection -->
+    <label for="mode">Mode:</label>
+    <select id="mode">
+      <option value="copy">Copy</option>
+      <option value="memorize">Memorize</option>
+    </select>
+
+    <!-- Dropdown Container -->
+    <div id="dropdownContainer">
+      <label>Select Verse:</label>
+      <select id="unifiedDropdown"></select>
+    </div>
+
+    <!-- Selected Verses -->
+    <div class="verse-list" id="selectedVersesList">
+      <h3>Selected Verses:</h3>
+      <ul id="verseList"></ul>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quizSection" class="hidden">
+      <p id="questionDisplay"></p>
+      <textarea 
+        id="userInput" 
+        placeholder="Type here"
+        oninput="autoResize(this)"
+        rows="1"
+      ></textarea>
+      <button onclick="submitAnswer()">Submit</button>
+    </div>
+
+    <button onclick="startQuiz()">Start Quiz</button>
+    <button onclick="refreshPage()">Reset Quiz</button>
+    <p id="status"></p>
+  </div>
+
+  <script>
     const bibleVerses = {
       "Genesis": { "4": { "26": "And to Seth also a son was born..." } },
       "Joel": { "2": { "32": "And everyone who calls on the name..." } },
@@ -24,88 +71,60 @@
     let currentQueue = [];
     let currentVerse = null;
 
-    function renderDropdown(id, options, onChange, label, showBack = false, backCallback = null) {
-      const container = document.getElementById("dropdownContainer");
-      let existing = document.getElementById(id);
-      if (existing) container.removeChild(existing);
+    let navigation = { book: null, chapter: null };
 
-      const wrapper = document.createElement("div");
-      wrapper.className = "dropdown-group";
-      wrapper.id = id;
+    function updateDropdown() {
+      const dropdown = document.getElementById("unifiedDropdown");
+      dropdown.innerHTML = "";
 
-      const labelElem = document.createElement("label");
-      labelElem.textContent = `Select ${label}:`;
-      wrapper.appendChild(labelElem);
+      const addOption = (value, text) => {
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = text;
+        dropdown.appendChild(opt);
+      };
 
-      const select = document.createElement("select");
-
-      if (showBack && backCallback) {
-        const backOption = document.createElement("option");
-        backOption.value = "__back";
-        backOption.textContent = "← Back";
-        select.appendChild(backOption);
+      if (!navigation.book) {
+        addOption("__prompt", "-- Choose Book --");
+        Object.keys(bibleVerses).forEach(book => addOption(book, book));
+      } else if (!navigation.chapter) {
+        addOption("__back", "← Back to Books");
+        addOption("__prompt", `-- Choose Chapter for ${navigation.book} --`);
+        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, `Chapter ${chap}`));
+      } else {
+        addOption("__back", "← Back to Chapters");
+        addOption("__prompt", `-- Choose Verse for ${navigation.book} ${navigation.chapter} --`);
+        Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
+          addOption(verse, `Verse ${verse}`)
+        );
       }
+    }
 
-      const promptOption = document.createElement("option");
-      promptOption.value = "";
-      promptOption.disabled = true;
-      promptOption.selected = true;
-      promptOption.textContent = `--Choose ${label}--`;
-      select.appendChild(promptOption);
+    document.addEventListener("DOMContentLoaded", () => {
+      const dropdown = document.getElementById("unifiedDropdown");
+      updateDropdown();
 
-      options.forEach(opt => {
-        const option = document.createElement("option");
-        option.value = opt;
-        option.textContent = opt;
-        select.appendChild(option);
-      });
+      dropdown.addEventListener("change", () => {
+        const value = dropdown.value;
 
-      select.addEventListener('change', () => {
-        const val = select.value;
-        if (val === "__back" && backCallback) {
-          backCallback();
+        if (value === "__back") {
+          if (navigation.chapter) {
+            navigation.chapter = null;
+          } else {
+            navigation.book = null;
+          }
+        } else if (!navigation.book) {
+          navigation.book = value;
+        } else if (!navigation.chapter) {
+          navigation.chapter = value;
         } else {
-          onChange(val);
+          addVerse(navigation.book, navigation.chapter, value);
+          navigation = { book: null, chapter: null }; // Reset navigation
         }
+
+        updateDropdown();
       });
-
-      wrapper.appendChild(select);
-      container.appendChild(wrapper);
-    }
-
-    function showBooks() {
-      renderDropdown("bookDropdown", Object.keys(bibleVerses), book => {
-        if (book) showChapters(book);
-      }, "Book");
-
-      // Clear lower dropdowns
-      removeDropdowns(["chapterDropdown", "verseDropdown"]);
-    }
-
-    function showChapters(book) {
-      renderDropdown("chapterDropdown", Object.keys(bibleVerses[book]), chapter => {
-        if (chapter) showVerses(book, chapter);
-      }, "Chapter", true, showBooks);
-
-      // Clear verse dropdown
-      removeDropdowns(["verseDropdown"]);
-    }
-
-    function showVerses(book, chapter) {
-      renderDropdown("verseDropdown", Object.keys(bibleVerses[book][chapter]), verse => {
-        if (verse) {
-          addVerse(book, chapter, verse);
-        }
-      }, "Verse", true, () => showChapters(book));
-    }
-
-    function removeDropdowns(ids) {
-      const container = document.getElementById("dropdownContainer");
-      ids.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) container.removeChild(el);
-      });
-    }
+    });
 
     function addVerse(book, chapter, verse) {
       const ref = `${book} ${chapter}:${verse}`;
@@ -172,49 +191,6 @@
     function refreshPage() {
       window.location.reload();
     }
-
-    window.addEventListener('DOMContentLoaded', showBooks);
   </script>
-</head>
-<body>
-  <div class="navbar">
-    <span class="logo" onclick="Bookroom()">Bookroom</span>
-  </div>
-
-  <div class="form-container">
-    <h1>Verse Study Quiz</h1>
-
-    <!-- Mode Selection -->
-    <label for="mode">Mode:</label>
-    <select id="mode">
-      <option value="copy">Copy</option>
-      <option value="memorize">Memorize</option>
-    </select>
-
-    <!-- Dropdown Container -->
-    <div id="dropdownContainer"></div>
-
-    <!-- Selected Verses -->
-    <div class="verse-list" id="selectedVersesList">
-      <h3>Selected Verses:</h3>
-      <ul id="verseList"></ul>
-    </div>
-
-    <!-- Quiz Section -->
-    <div id="quizSection" class="hidden">
-      <p id="questionDisplay"></p>
-      <textarea 
-        id="userInput" 
-        placeholder="Type here"
-        oninput="autoResize(this)"
-        rows="1"
-      ></textarea>
-      <button onclick="submitAnswer()">Submit</button>
-    </div>
-
-    <button onclick="startQuiz()">Start Quiz</button>
-    <button onclick="refreshPage()">Reset Quiz</button>
-    <p id="status"></p>
-  </div>
 </body>
 </html>
