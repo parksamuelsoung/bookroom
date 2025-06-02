@@ -11,16 +11,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 100vh; /* Keep vh for vertical responsiveness */
 }
 
+/* Changed from 400px max-width to em-based max-width */
 .form-container {
   width: 90%;
-  max-width: 400px;
+  max-width: 25em; /* 25em ≈ 400px */
   background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 1.25em; /* 20px */
+  border-radius: 0.625em; /* 10px */
+  box-shadow: 0 0.25em 0.625em rgba(0, 0, 0, 0.1); /* 4px 10px */
   text-align: center;
 }
 
@@ -38,8 +39,8 @@ input[type="email"],
 input[type="password"] {
   width: 100%;
   padding: 0.6em 1em;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  border: 0.063em solid #ccc; /* 1px */
+  border-radius: 0.375em; /* 6px */
   background-color: white;
   color: #222;
   font-size: 1rem;
@@ -53,7 +54,7 @@ button {
   padding: 0.6em 1.5em;
   font-size: 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375em; /* 6px */
   background-color: #007bff;
   color: white;
   cursor: pointer;
@@ -65,7 +66,7 @@ button:hover {
 }
 
 /* Responsive tweaks */
-@media (max-width: 600px) {
+@media (max-width: 37.5em) { /* 600px */
   input,
   button {
     font-size: 0.9rem;
@@ -73,10 +74,14 @@ button:hover {
   }
 }
 
-@media (min-width: 901px) {
+@media (min-width: 56.3125em) { /* 901px */
   input,
   button {
     font-size: 1.1rem;
     padding: 0.75em 1.5em;
+  }
+
+  .form-container {
+    max-width: 40em; /* ≈ 640px */
   }
 }
