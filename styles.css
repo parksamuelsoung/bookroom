@@ -169,16 +169,6 @@ button:hover {
 }
 
 
-.dropdown-content1 input[type="text"] {
-  width: 750px;
-  height: 100px;
-}
-
-.dropdown-content2 input[type="text"] {
-  width: 750px;
-  height: 100px;
-}
-
 .dropdown-content1 a {
   color: black;
   padding: 12px 16px;
