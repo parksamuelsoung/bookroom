@@ -3,65 +3,59 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Persistent Dropdown Verse Quiz</title>
+  <title>Verse Study Quiz</title>
+  <link rel="stylesheet" href="styles.css" />
   <style>
-    .dropdown-area {
-      margin-top: 1em;
-      padding: 1em;
-      border: 1px solid #ccc;
-      width: 300px;
-      background: #f9f9f9;
-    }
-
-    .dropdown-area h4 {
-      margin: 0 0 0.5em;
-    }
-
-    .dropdown-option {
-      cursor: pointer;
-      padding: 0.3em;
-      margin: 0.2em 0;
-      background: #fff;
-      border: 1px solid #ddd;
-    }
-
-    .dropdown-option:hover {
-      background: #e0e0e0;
-    }
-
-    .hidden {
-      display: none;
+    select {
+      margin: 1em 0;
+      padding: 0.5em;
+      font-size: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>Verse Study Quiz</h1>
-
-  <label for="mode">Mode:</label>
-  <select id="mode">
-    <option value="copy">Copy</option>
-    <option value="memorize">Memorize</option>
-  </select>
-
-  <div class="dropdown-area" id="dropdownContainer">
-    <h4>Select Verse</h4>
-    <div id="customDropdown"></div>
+  <div class="navbar">
+    <span class="logo" onclick="Bookroom()">Bookroom</span>
   </div>
 
-  <div class="verse-list" id="selectedVersesList">
-    <h3>Selected Verses:</h3>
-    <ul id="verseList"></ul>
-  </div>
+  <div class="form-container">
+    <h1>Verse Study Quiz</h1>
 
-  <div id="quizSection" class="hidden">
-    <p id="questionDisplay"></p>
-    <textarea id="userInput" placeholder="Type here" rows="1" oninput="autoResize(this)"></textarea>
-    <button onclick="submitAnswer()">Submit</button>
-  </div>
+    <!-- Mode Selection -->
+    <label for="mode">Mode:</label>
+    <select id="mode">
+      <option value="copy">Copy</option>
+      <option value="memorize">Memorize</option>
+    </select>
 
-  <button onclick="startQuiz()">Start Quiz</button>
-  <button onclick="refreshPage()">Reset</button>
-  <p id="status"></p>
+    <!-- Dropdown Container -->
+    <div id="dropdownContainer">
+      <label>Select Verse:</label>
+      <select id="unifiedDropdown"></select>
+    </div>
+
+    <!-- Selected Verses -->
+    <div class="verse-list" id="selectedVersesList">
+      <h3>Selected Verses:</h3>
+      <ul id="verseList"></ul>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quizSection" class="hidden">
+      <p id="questionDisplay"></p>
+      <textarea 
+        id="userInput" 
+        placeholder="Type here"
+        oninput="autoResize(this)"
+        rows="1"
+      ></textarea>
+      <button onclick="submitAnswer()">Submit</button>
+    </div>
+
+    <button onclick="startQuiz()">Start Quiz</button>
+    <button onclick="refreshPage()">Reset Quiz</button>
+    <p id="status"></p>
+  </div>
 
   <script>
     const bibleVerses = {
@@ -73,51 +67,64 @@
       "1 Corinthians": { "1": { "2": "To the church of God which is in Corinth..." } }
     };
 
-    let navigation = { book: null, chapter: null };
     let selectedVerses = {};
     let currentQueue = [];
     let currentVerse = null;
 
-    function renderCustomDropdown() {
-      const container = document.getElementById("customDropdown");
-      container.innerHTML = "";
+    let navigation = { book: null, chapter: null };
 
-      function createOption(label, value, callback) {
-        const div = document.createElement("div");
-        div.className = "dropdown-option";
-        div.textContent = label;
-        div.onclick = () => callback(value);
-        container.appendChild(div);
-      }
+    function updateDropdown() {
+      const dropdown = document.getElementById("unifiedDropdown");
+      dropdown.innerHTML = "";
+
+      const addOption = (value, text) => {
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = text;
+        dropdown.appendChild(opt);
+      };
 
       if (!navigation.book) {
-        Object.keys(bibleVerses).forEach(book => createOption(book, book, val => {
-          navigation.book = val;
-          renderCustomDropdown();
-        }));
+        addOption("__prompt", "-- Choose Book --");
+        Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        createOption("← Back to Books", "__back", () => {
-          navigation.book = null;
-          renderCustomDropdown();
-        });
-
-        Object.keys(bibleVerses[navigation.book]).forEach(chapter => createOption(`Chapter ${chapter}`, chapter, val => {
-          navigation.chapter = val;
-          renderCustomDropdown();
-        }));
+        addOption("__back", "← Back to Books");
+        addOption("__prompt", `-- Choose Chapter for ${navigation.book} --`);
+        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, `Chapter ${chap}`));
       } else {
-        createOption("← Back to Chapters", "__back", () => {
-          navigation.chapter = null;
-          renderCustomDropdown();
-        });
-
-        Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse => createOption(`Verse ${verse}`, verse, val => {
-          addVerse(navigation.book, navigation.chapter, val);
-          navigation = { book: null, chapter: null };
-          renderCustomDropdown();
-        }));
+        addOption("__back", "← Back to Chapters");
+        addOption("__prompt", `-- Choose Verse for ${navigation.book} ${navigation.chapter} --`);
+        Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
+          addOption(verse, `Verse ${verse}`)
+        );
       }
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const dropdown = document.getElementById("unifiedDropdown");
+      updateDropdown();
+
+      dropdown.addEventListener("change", () => {
+        const value = dropdown.value;
+
+        if (value === "__back") {
+          if (navigation.chapter) {
+            navigation.chapter = null;
+          } else {
+            navigation.book = null;
+          }
+        } else if (!navigation.book) {
+          navigation.book = value;
+        } else if (!navigation.chapter) {
+          navigation.chapter = value;
+        } else {
+          addVerse(navigation.book, navigation.chapter, value);
+          navigation = { book: null, chapter: null }; // Reset navigation
+        }
+
+        updateDropdown();
+      });
+    });
 
     function addVerse(book, chapter, verse) {
       const ref = `${book} ${chapter}:${verse}`;
@@ -125,8 +132,10 @@
         selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
         const li = document.createElement("li");
         li.textContent = `${ref} ${selectedVerses[ref].text}`;
+        li.classList.add("highlighted");
         document.getElementById("verseList").appendChild(li);
       }
+
       document.getElementById("status").textContent = `Added: ${ref}`;
     }
 
@@ -138,7 +147,7 @@
     function startQuiz() {
       currentQueue = Object.entries(selectedVerses).filter(([_, data]) => data.correctCount < 3);
       if (currentQueue.length === 0) {
-        alert("Please add verses first.");
+        alert("Please add verses to study.");
         return;
       }
       document.getElementById("quizSection").classList.remove("hidden");
@@ -147,16 +156,17 @@
 
     function showNextQuestion() {
       if (currentQueue.length === 0) {
-        document.getElementById("questionDisplay").textContent = "You’ve completed all verses!";
+        document.getElementById("questionDisplay").textContent = "Congratulations! You've mastered all verses.";
         document.getElementById("quizSection").classList.add("hidden");
         return;
       }
 
       const randomIndex = Math.floor(Math.random() * currentQueue.length);
       currentVerse = currentQueue[randomIndex];
+      const mode = document.getElementById("mode").value;
+
       const ref = currentVerse[0];
       const text = currentVerse[1].text;
-      const mode = document.getElementById("mode").value;
 
       document.getElementById("userInput").value = "";
       document.getElementById("questionDisplay").textContent = mode === "copy" ? `${ref} ${text}` : ref;
@@ -179,12 +189,8 @@
     }
 
     function refreshPage() {
-      location.reload();
+      window.location.reload();
     }
-
-    document.addEventListener("DOMContentLoaded", () => {
-      renderCustomDropdown();
-    });
   </script>
 </body>
 </html>
