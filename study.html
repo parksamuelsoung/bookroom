@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Verse Study Quiz</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .dropdown-group {
+      margin-bottom: 1em;
+    }
+  </style>
   <script defer>
     const bibleVerses = {
       "Genesis": { "4": { "26": "And to Seth also a son was born..." } },
@@ -19,13 +24,18 @@
     let currentQueue = [];
     let currentVerse = null;
 
-    function renderDropdown(type, options, onChange, label, showBack = false, backCallback = null) {
+    function renderDropdown(id, options, onChange, label, showBack = false, backCallback = null) {
       const container = document.getElementById("dropdownContainer");
-      container.innerHTML = '';
+      let existing = document.getElementById(id);
+      if (existing) container.removeChild(existing);
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "dropdown-group";
+      wrapper.id = id;
 
       const labelElem = document.createElement("label");
       labelElem.textContent = `Select ${label}:`;
-      container.appendChild(labelElem);
+      wrapper.appendChild(labelElem);
 
       const select = document.createElement("select");
 
@@ -59,31 +69,42 @@
         }
       });
 
-      container.appendChild(select);
+      wrapper.appendChild(select);
+      container.appendChild(wrapper);
     }
 
     function showBooks() {
-      const books = Object.keys(bibleVerses);
-      renderDropdown('book', books, book => {
+      renderDropdown("bookDropdown", Object.keys(bibleVerses), book => {
         if (book) showChapters(book);
-      }, 'Book');
+      }, "Book");
+
+      // Clear lower dropdowns
+      removeDropdowns(["chapterDropdown", "verseDropdown"]);
     }
 
     function showChapters(book) {
-      const chapters = Object.keys(bibleVerses[book]);
-      renderDropdown('chapter', chapters, chapter => {
+      renderDropdown("chapterDropdown", Object.keys(bibleVerses[book]), chapter => {
         if (chapter) showVerses(book, chapter);
-      }, 'Chapter', true, showBooks);
+      }, "Chapter", true, showBooks);
+
+      // Clear verse dropdown
+      removeDropdowns(["verseDropdown"]);
     }
 
     function showVerses(book, chapter) {
-      const verses = Object.keys(bibleVerses[book][chapter]);
-      renderDropdown('verse', verses, verse => {
+      renderDropdown("verseDropdown", Object.keys(bibleVerses[book][chapter]), verse => {
         if (verse) {
           addVerse(book, chapter, verse);
-          showBooks(); // return to book selection after adding
         }
-      }, 'Verse', true, () => showChapters(book));
+      }, "Verse", true, () => showChapters(book));
+    }
+
+    function removeDropdowns(ids) {
+      const container = document.getElementById("dropdownContainer");
+      ids.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) container.removeChild(el);
+      });
     }
 
     function addVerse(book, chapter, verse) {
