@@ -7,16 +7,16 @@
 
 // Songs
 
-function Songs() {
-  window.location.href = "Songs.html";
+function songs() {
+  window.location.href = "songs.html";
 }
 
-function Bookroom() {
-  window.location.href = "Bookroom.html";
+function bookroom() {
+  window.location.href = "bookroom.html";
 }
 
-function SingingWithGrace() {
-  window.location.href = "Singing_with_Grace.html";
+function singingWithGrace() {
+  window.location.href = "singing-with-grace.html";
 }
 
 
