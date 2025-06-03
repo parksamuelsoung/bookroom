@@ -148,18 +148,51 @@ button:hover {
 /* Singing with Grace */
 
 
+
 .dropdown-content1 {
+  font-family:Calibri;
   display: none;
   position: absolute;
   background-color: #f9f9f9;
+  width: 800px;
+  height: 800px;
   overflow-y: auto;
   overflow-x: auto;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
 }
 
+.dropdown-content2 {
+  font-family:Calibri;
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  width: 800px;
+  height: 800px;
+  overflow-y: auto;
+  overflow-x: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropdown-content1 input[type="text"] {
+  font-size: 50px;
+  width: 750px;
+  height: 100px;
+}
+
+.dropdown-content2 input[type="text"] {
+  font-size: 50px;
+  width: 750px;
+  height: 100px;
+}
+
 .dropdown-content1 a {
+  font-family:Calibri, Arial, sans-serif;
+  font-size: 50px;
   color: black;
+  padding: 12px 16px;
   text-decoration: none;
   display: block;
   white-space: nowrap;
@@ -167,6 +200,32 @@ button:hover {
   text-overflow: ellipsis;
 }
 
+.dropdown-content2 a {
+  font-family:Calibri, Arial, sans-serif;
+  font-size: 50px;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 
+button.dropbtnSearch {
+  font-size: 50px;
+  height: 200px;
+  width: 800px;
+}
+
+button.dropbtn검색 {
+  font-size: 50px;
+  height: 200px;
+  width: 800px;
+}
+
+b {
+  font-weight: bold;
+}
 
 }
