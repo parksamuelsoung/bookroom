@@ -9,12 +9,12 @@ function study() {
   window.location.href = "study.html";
 }
 
-function Songs() {
-  window.location.href = "Songs.html";
+function songs() {
+  window.location.href = "songs.html";
 }
 
-function Bookroom() {
-  window.location.href = "Bookroom.html";
+function bookroom() {
+  window.location.href = "bookroom.html";
 }
 
 function 아침_부흥을_위한_거룩한_말씀() {
