@@ -25,7 +25,7 @@
 
 
   <div class="dropdown">
-    <button id="button2" class="dropbtnSearch" style="margin-bottom:5px" onclick="toggleDropdown1()">Search</button>
+    <button id="button" onclick="toggleDropdown1()">Search</button>
     <div class="dropdown-content1">
       <input type="text" placeholder="Number or Title" id="songSearch" onkeyup="filterSongs('songSearch', 0)">
       <a doc="#" onclick="getSong('1')">1 We’ve found the secret of living</a>
@@ -721,14 +721,13 @@
       <a doc="#" onclick="getSong('343', true)">343 </a>
       <a doc="#" onclick="getSong('344', true)">344 </a>
     </div>
-  </div><br><br>
-
-
-  <br><br><iframe id="songContent" style="width: 900px; height: 800px; border: none; margin: 0;"></iframe>
-
+    
+  </div>
+    <iframe id="songContent" style="width: 900px; height: 800px; border: none; margin: 0;"></iframe>
   </div>
 
 
+  
   <script>
  
     var songDict = {
