@@ -1,7 +1,5 @@
 
 
-  
-  <script>
  
     var songDict = {
       "1": "<b>1 (<a href='https://www.hymnal.net/en/hymn/h/1162'>1162</a>)<br><br>We’ve found the secret of living<br><br>1. We’ve found the secret of living,<br>We’ve seen the vision divine:<br>We are of God in Christ Jesus,<br>We’re abiding, abiding in the vine.<br><br>- Abiding in the vine,<br>Abiding in the vine,<br>All the riches of God’s life are mine!<br>Praise God, He put us here,<br>Never to leave; oh, we’re—<br>Abiding, abiding in the vine.<br><br>2. No more in vain need we struggle,<br>Trying the way in to find.<br>Praise God—we’re in Him already,<br>Hallelujah, abiding in the vine.<br><br>3. In us, the ointment is moving,<br>’Tis the anointing divine;<br>God’s precious essence bestowing,<br>While abiding, abiding in the vine.<br><br>4. Now in the life-flow we’re living,<br>O how the light in us shines!<br>Both God and man are at home now<br>By the mutual abiding in the vine.<b>",
@@ -696,15 +694,9 @@
       "343": "343 ()<br><br><a href=''></a>",
       "344": "344 ()<br><br><a href=''></a>",
     };
-  </script>
+
 
   
-</body>
-
-
-
-
-</html>
 
 
 
