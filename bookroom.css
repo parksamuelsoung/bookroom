@@ -144,21 +144,6 @@ button:hover {
 
 /* Singing with Grace */
 
-button {
-  font-family:Calibri, Arial, sans-serif;
-  font-size: 50px;
-  height: 200px;
-  width: 800px;
-  border-radius: 50px;
-}
-
-#button2 {
-  font-family:Calibri, Arial, sans-serif;
-  border: none;
-  width: 400px;
-  border-radius: 50px;
-  height: 100px;
-}
 
 
 
