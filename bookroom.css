@@ -140,29 +140,9 @@ button:hover {
 
   
 
-  
-/* styles_Songs.css */
-
 /* Songs */
 
 /* Singing with Grace */
-
-
-/* styles_Songs.css */
-
-
-
-/* -r */
-
-body {
-  font-family:Calibri, Arial, sans-serif;
-  margin: 50px;
-}
-
-h1 {
-  font-family:Calibri, Arial, sans-serif;
-  font-size: 90px;
-}
 
 button {
   font-family:Calibri, Arial, sans-serif;
@@ -181,6 +161,8 @@ button {
 }
 
 
+
+  
 /* Songs */
 
 label {
@@ -188,22 +170,6 @@ label {
   font-size: 50px;
 }
 
-#googleDoc {
-  width: 110%;
-  height: calc(100%+300px);
-  margin-top: -150px;
-  margin-left: -80px;
-  margin-right: -100px;
-  border: 10px;
-  transform: scale(1);
-  transform-origin: left;
-}
-
-#googleDocContainer {
-  width: 80%;
-  height: 100%;
-  overflow: hidden;
-}
 
 
 
