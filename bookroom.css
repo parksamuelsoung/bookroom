@@ -148,6 +148,68 @@ button:hover {
 /* Singing with Grace */
 
 
+/* styles_Songs.css */
+
+
+
+/* -r */
+
+body {
+  font-family:Calibri, Arial, sans-serif;
+  margin: 50px;
+}
+
+h1 {
+  font-family:Calibri, Arial, sans-serif;
+  font-size: 90px;
+}
+
+button {
+  font-family:Calibri, Arial, sans-serif;
+  font-size: 50px;
+  height: 200px;
+  width: 800px;
+  border-radius: 50px;
+}
+
+#button2 {
+  font-family:Calibri, Arial, sans-serif;
+  border: none;
+  width: 400px;
+  border-radius: 50px;
+  height: 100px;
+}
+
+
+/* Songs */
+
+label {
+  font-family:Calibri, Arial, sans-serif;
+  font-size: 50px;
+}
+
+#googleDoc {
+  width: 110%;
+  height: calc(100%+300px);
+  margin-top: -150px;
+  margin-left: -80px;
+  margin-right: -100px;
+  border: 10px;
+  transform: scale(1);
+  transform-origin: left;
+}
+
+#googleDocContainer {
+  width: 80%;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+
+
+
+/* Singing with Grace */
 
 .dropdown-content1 {
   font-family:Calibri;
@@ -227,5 +289,6 @@ button.dropbtn검색 {
 b {
   font-weight: bold;
 }
+
 
 }
