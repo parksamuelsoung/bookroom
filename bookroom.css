@@ -198,17 +198,17 @@ button:hover {
   text-overflow: ellipsis;
 }
 
-.dropbtnSearch {
+.dropbtn-search {
   height: 80%;
   width: 80%;
 }
 
-.dropbtn검색 {
+.dropbtn-검색 {
   height: 80%;
   width: 80%;
 }
 
-.songContent {
+.song-content {
   font-size: 0.9rem;
   width: 80%; 
   height: 80%; 
