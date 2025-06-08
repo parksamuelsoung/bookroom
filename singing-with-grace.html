@@ -13,9 +13,9 @@
 <body>
 <div class="navbar">
   <span class="logo" onclick="bookroom()">Bookroom</span>
-  <div class="dropdow">
+  <div class="dropdown">
     <button class="dropbtn" onclick="songs()">Songs ▼</button>
-    <div class="dropdown-content">
+    <div class="dropdown-content1">
       <a href="#" onclick="singingWithGrace()">Top Hits</a>
       <a href="#" onclick="youngPeoples()">New Releases</a>
     </div>
@@ -27,7 +27,7 @@
   <h1>Singing with Grace</h1>
 
   <div class="dropdown">
-    <button class="dropbtnsearch" onclick="toggleDropdown1()">Search</button>
+    <button class="dropbtn-search" onclick="toggleDropdown1()">Search</button>
     <div class="dropdown-content1">
       <input type="text" placeholder="Number or Title" id="songSearch" onkeyup="filterSongs('songSearch', 0)">
       <a doc="#" onclick="getSong('1')">1 We’ve found the secret of living</a>
@@ -377,7 +377,7 @@
     </div>
 
     
-    <button class="dropbtn검색" onclick="toggleDropdown2()">검색</button>
+    <button class="dropbtn-검색" onclick="toggleDropdown2()">검색</button>
     <div class="dropdown-content2">
       <input type="text" placeholder="번호 또는 제목" id="노래검색" onkeyup="filterSongs('노래검색', 1)">
       <a doc="#" onclick="getSong('1', true)">1 thid is joed</a>
@@ -727,7 +727,7 @@
     </div>
     
   </div>
-    <iframe id="songContent"></iframe>
+    <iframe id="song-content"></iframe>
   </div>
 </div>
 
