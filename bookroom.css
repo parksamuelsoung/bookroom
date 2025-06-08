@@ -211,5 +211,12 @@ button.dropbtn검색 {
   width: 80%;
 }
 
+.songContent {
+  width: 80%; 
+  height: 80%; 
+  border: none; 
+  margin: 0;
+}
+  
 
 }
