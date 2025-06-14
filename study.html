@@ -89,12 +89,10 @@
         addOption("__prompt", "-- Choose Book --");
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        addOption("__back", "← Back to Books");
-        addOption("__prompt", `-- Choose Chapter for ${navigation.book} --`);
+        addOption("__back", `${navigation.book}`);
         Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, `Chapter ${chap}`));
       } else {
-        addOption("__back", "← Back to Chapters");
-        addOption("__prompt", `-- Choose Verse for ${navigation.book} ${navigation.chapter} --`);
+        addOption("__back", `${navigation.book} ${navigation.chapter}`);
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
           addOption(verse, `Verse ${verse}`)
         );
