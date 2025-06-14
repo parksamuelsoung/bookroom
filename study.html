@@ -23,15 +23,14 @@
     <h1>Verse Study Quiz</h1>
 
     <!-- Mode Selection -->
-    <label for="mode">Mode:</label>
     <select id="mode">
+      <option value="mode">Select Mode</option>
       <option value="copy">Copy</option>
       <option value="memorize">Memorize</option>
     </select>
 
     <!-- Dropdown Container -->
     <div id="dropdownContainer">
-      <label>Select Verse:</label>
       <select id="unifiedDropdown"></select>
     </div>
 
@@ -86,7 +85,7 @@
       };
 
       if (!navigation.book) {
-        addOption("__prompt", "-- Choose Book --");
+        addOption("__prompt", "Choose Verse to Study");
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
         addOption("__back", `${navigation.book}`);
