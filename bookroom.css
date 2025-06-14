@@ -40,7 +40,7 @@ body {
 /* === Form Container === */
 .form-container {
   width: 90%;
-  max-width: 25em; /* 25em ≈ 400px */
+  max-width: 25rem; /* 25em ≈ 400px */
   background: white;
   padding: 1.25em; /* 20px */
   border-radius: 0.625em; /* 10px */
