@@ -37,8 +37,8 @@
     <!-- Selected Verses -->
     <div class="verse-list" id="selectedVersesList">
       <div class="button-row">
-      <h3>Selected Verses:</h3>
-      <p id="verseRefs"></p>
+        <h3>Selected Verses:</h3>
+        <p id="verseRefs"></p>
       </div>
     </div>
 
@@ -54,9 +54,10 @@
       <p id="status"></p>
       <button onclick="submitAnswer()">Submit</button>
     </div>
+
     <div class="button-row">
-    <button onclick="startQuiz()">Start Quiz</button>
-    <button onclick="refreshPage()">Reset Quiz</button>
+      <button onclick="startQuiz()">Start Quiz</button>
+      <button onclick="refreshPage()">Reset Quiz</button>
     </div>
   </div>
 
@@ -68,13 +69,11 @@
       "Acts": { "2": { "21": "And it shall be that everyone..." } },
       "Romans": { "10": { "12": "For there is no distinction...", "13": "For 'whoever calls...'" } },
       "Galatians": { "1": { "15": "But when it pleased God, who set me apart from my mother’s womb and called me through His grace," } }
-     
     };
 
     let selectedVerses = {};
     let currentQueue = [];
     let currentVerse = null;
-
     let navigation = { book: null, chapter: null };
 
     function updateDropdown() {
@@ -121,35 +120,29 @@
           navigation.chapter = value;
         } else {
           addVerse(navigation.book, navigation.chapter, value);
-          navigation = { book: null, chapter: null }; // Reset navigation
+          navigation = { book: null, chapter: null };
         }
 
         updateDropdown();
+      });
 
-
-
-        document.getElementById("userInput").addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault(); // prevent new line if you want
-    submitAnswer();          // call your submit function
-  }
-});
-
+      // Allow Enter key to submit answer
+      document.getElementById("userInput").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          submitAnswer();
+        }
       });
     });
 
-
     function addVerse(book, chapter, verse) {
-  const ref = `${book} ${chapter}:${verse}`;
-  if (!selectedVerses[ref]) {
-    selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
-
-    // Instead of adding a list item, update the text with all refs comma separated
-    const allRefs = Object.keys(selectedVerses).join(", ");
-    document.getElementById("verseRefs").textContent = allRefs;
-  }
-}
-
+      const ref = `${book} ${chapter}:${verse}`;
+      if (!selectedVerses[ref]) {
+        selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
+        const allRefs = Object.keys(selectedVerses).join(", ");
+        document.getElementById("verseRefs").textContent = allRefs;
+      }
+    }
 
     function autoResize(textarea) {
       textarea.style.height = 'auto';
@@ -191,8 +184,14 @@
 
       if (input === correctAnswer) {
         selectedVerses[ref].correctCount++;
-        currentQueue = currentQueue.filter(([key]) => key !== ref);
-        document.getElementById("status").textContent = `Correct! (${ref})`;
+
+        if (selectedVerses[ref].correctCount >= 3) {
+          // Only remove when mastered
+          currentQueue = currentQueue.filter(([key]) => key !== ref);
+        }
+
+        document.getElementById("status").textContent =
+          `Correct! (${ref}) ${selectedVerses[ref].correctCount}/3`;
       } else {
         document.getElementById("status").textContent = `Incorrect. (${ref})`;
       }
