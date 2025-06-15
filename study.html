@@ -67,7 +67,7 @@
       "John": { "3": { "16": "For God so loved the world...", "17": "For God did not send the Son..." } },
       "Acts": { "2": { "21": "And it shall be that everyone..." } },
       "Romans": { "10": { "12": "For there is no distinction...", "13": "For 'whoever calls...'" } },
-      "Galatians": { "1": { "15": "But when it pleased God, who set me apart from my mother's womb and called me through His grace," } }
+      "Galatians": { "1": { "15": "But when it pleased God, who set me apart from my mother’s womb and called me through His grace," } }
     };
 
     let selectedVerses = {};
@@ -176,19 +176,25 @@
       document.getElementById("questionDisplay").textContent = mode === "copy" ? `${ref} ${text}` : ref;
     }
 
+    function normalizeText(text) {
+      return text
+        .replace(/[‘’]/g, "'") // replace curly single quotes
+        .replace(/[“”]/g, '"') // replace curly double quotes
+        .replace(/\s+/g, ' ')  // normalize spaces
+        .trim()
+        .toLowerCase();
+    }
+
     function submitAnswer() {
       const input = document.getElementById("userInput").value.trim();
       const ref = currentVerse[0];
       const correctAnswer = `${ref} ${currentVerse[1].text}`;
 
-      if (input === correctAnswer) {
+      if (normalizeText(input) === normalizeText(correctAnswer)) {
         selectedVerses[ref].correctCount++;
-
         if (selectedVerses[ref].correctCount >= 3) {
-          // Only remove when mastered
           currentQueue = currentQueue.filter(([key]) => key !== ref);
         }
-
         document.getElementById("status").textContent =
           `Correct! (${ref}) ${selectedVerses[ref].correctCount}/3`;
       } else {
@@ -204,3 +210,4 @@
   </script>
 </body>
 </html>
+
