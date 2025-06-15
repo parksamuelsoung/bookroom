@@ -97,6 +97,14 @@ button:hover {
   background-color: #0056b3;
 }
 
+.button-row {
+  display: flex;
+  gap: 1em; /* space between buttons */
+  justify-content: center; /* center buttons horizontally */
+  margin-top: 1em; /* optional spacing above */
+}
+
+
 /* === Highlighted List === */
 .verse-list {
   text-align: left;
