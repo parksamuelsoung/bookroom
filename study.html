@@ -37,7 +37,6 @@
     <!-- Selected Verses -->
     <div class="verse-list" id="selectedVersesList">
       <h3>Selected Verses:</h3>
-      <p id="status"></p>
       <p id="verseRefs"></p>
     </div>
 
@@ -50,6 +49,7 @@
         oninput="autoResize(this)"
         rows="1"
       ></textarea>
+      <p id="status"></p>
       <button onclick="submitAnswer()">Submit</button>
     </div>
     <div display="flex">
@@ -135,8 +135,6 @@
     const allRefs = Object.keys(selectedVerses).join(", ");
     document.getElementById("verseRefs").textContent = allRefs;
   }
-
-  document.getElementById("status").textContent = `Added: ${ref}`;
 }
 
 
