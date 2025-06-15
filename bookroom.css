@@ -99,10 +99,16 @@ button:hover {
 
 .button-row {
   display: flex;
-  gap: 1em; /* space between buttons */
-  justify-content: center; /* center buttons horizontally */
-  margin-top: 1em; /* optional spacing above */
+  gap: 1em;
+  justify-content: center;
+  margin-top: 1em;
 }
+
+.button-row button {
+  display: inline-block;
+  margin: 0;
+}
+
 
 
 /* === Highlighted List === */
