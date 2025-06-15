@@ -109,12 +109,11 @@ button:hover {
 }
 
 .highlighted {
-  background-color: rgba(255, 255, 255, 0.3);
-  color: white;
-  backdrop-filter: blur(4px);
-  padding: 0.5em;
-  border-radius: 0.25em; /* 4px */
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue wash */
+  color: #0056b3;                             /* Darker contrasting blue */
+  backdrop-filter: none;                      /* Optional: remove blur */
 }
+
 
 /* === Responsive Tweaks === */
 @media (max-width: 37.5em) { /* 600px */
