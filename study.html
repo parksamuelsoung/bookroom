@@ -79,15 +79,18 @@
       };
 
       if (!navigation.book) {
+        // Top level: list all books
         addOption("__prompt", "Choose Verse to Study");
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        addOption("__back", ${navigation.book});
-        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, ${chap}));
+        // Inside a book: show back option and chapters
+        addOption("__back", navigation.book);
+        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, chap));
       } else {
-        addOption("__back", ${navigation.book} ${navigation.chapter});
+        // Inside a chapter: show back option and verses
+        addOption("__back", `${navigation.book} ${navigation.chapter}`);
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
-          addOption(verse, ${verse})
+          addOption(verse, verse)
         );
       }
     }
@@ -101,15 +104,20 @@
 
         if (value === "__back") {
           if (navigation.chapter) {
+            // Go back from verse to chapter list
             navigation.chapter = null;
           } else {
+            // Go back from chapter to book list
             navigation.book = null;
           }
         } else if (!navigation.book) {
+          // Select a book
           navigation.book = value;
         } else if (!navigation.chapter) {
+          // Select a chapter
           navigation.chapter = value;
         } else {
+          // Select a verse - add to selected verses and reset navigation
           addVerse(navigation.book, navigation.chapter, value);
           navigation = { book: null, chapter: null };
         }
@@ -127,7 +135,7 @@
     });
 
     function addVerse(book, chapter, verse) {
-      const ref = ${book} ${chapter}:${verse};
+      const ref = `${book} ${chapter}:${verse}`;
       if (!selectedVerses[ref]) {
         selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
         const allRefs = Object.keys(selectedVerses).join(", ");
@@ -165,7 +173,7 @@
       const text = currentVerse[1].text;
 
       document.getElementById("userInput").value = "";
-      document.getElementById("questionDisplay").textContent = mode === "copy" ? ${ref} ${text} : ref;
+      document.getElementById("questionDisplay").textContent = mode === "copy" ? `${ref} ${text}` : ref;
     }
 
     function normalizeText(text) {
@@ -180,7 +188,7 @@
     function submitAnswer() {
       const input = document.getElementById("userInput").value.trim();
       const ref = currentVerse[0];
-      const correctAnswer = ${ref} ${currentVerse[1].text};
+      const correctAnswer = `${ref} ${currentVerse[1].text}`;
 
       if (normalizeText(input) === normalizeText(correctAnswer)) {
         selectedVerses[ref].correctCount++;
@@ -188,9 +196,9 @@
           currentQueue = currentQueue.filter(([key]) => key !== ref);
         }
         document.getElementById("status").textContent =
-          Correct! (${ref}) ${selectedVerses[ref].correctCount}/3;
+          `Correct! (${ref}) ${selectedVerses[ref].correctCount}/3`;
       } else {
-        document.getElementById("status").textContent = Incorrect. (${ref});
+        document.getElementById("status").textContent = `Incorrect. (${ref})`;
       }
 
       showNextQuestion();
