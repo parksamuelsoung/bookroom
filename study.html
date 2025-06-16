@@ -82,12 +82,12 @@
         addOption("__prompt", "Choose Verse to Study");
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        addOption("__back", `${navigation.book}`);
-        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, `${chap}`));
+        addOption("__back", ${navigation.book});
+        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, ${chap}));
       } else {
-        addOption("__back", `${navigation.book} ${navigation.chapter}`);
+        addOption("__back", ${navigation.book} ${navigation.chapter});
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
-          addOption(verse, `${verse}`)
+          addOption(verse, ${verse})
         );
       }
     }
@@ -127,7 +127,7 @@
     });
 
     function addVerse(book, chapter, verse) {
-      const ref = `${book} ${chapter}:${verse}`;
+      const ref = ${book} ${chapter}:${verse};
       if (!selectedVerses[ref]) {
         selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
         const allRefs = Object.keys(selectedVerses).join(", ");
@@ -165,7 +165,7 @@
       const text = currentVerse[1].text;
 
       document.getElementById("userInput").value = "";
-      document.getElementById("questionDisplay").textContent = mode === "copy" ? `${ref} ${text}` : ref;
+      document.getElementById("questionDisplay").textContent = mode === "copy" ? ${ref} ${text} : ref;
     }
 
     function normalizeText(text) {
@@ -180,7 +180,7 @@
     function submitAnswer() {
       const input = document.getElementById("userInput").value.trim();
       const ref = currentVerse[0];
-      const correctAnswer = `${ref} ${currentVerse[1].text}`;
+      const correctAnswer = ${ref} ${currentVerse[1].text};
 
       if (normalizeText(input) === normalizeText(correctAnswer)) {
         selectedVerses[ref].correctCount++;
@@ -188,9 +188,9 @@
           currentQueue = currentQueue.filter(([key]) => key !== ref);
         }
         document.getElementById("status").textContent =
-          `Correct! (${ref}) ${selectedVerses[ref].correctCount}/3`;
+          Correct! (${ref}) ${selectedVerses[ref].correctCount}/3;
       } else {
-        document.getElementById("status").textContent = `Incorrect. (${ref})`;
+        document.getElementById("status").textContent = Incorrect. (${ref});
       }
 
       showNextQuestion();
@@ -202,4 +202,3 @@
   </script>
 </body>
 </html>
-
