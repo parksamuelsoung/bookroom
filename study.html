@@ -6,7 +6,7 @@
   <title>Verse Study Quiz</title>
   <link rel="stylesheet" href="bookroom.css" />
   <script src="bookroom.js" defer></script>
-  <script src="study.js" defer></script> <!-- this file should contain bibleVerses -->
+  <script src="study.js" defer></script>
   <style>
     select {
       margin: 1em 0;
@@ -79,21 +79,16 @@
       };
 
       if (!navigation.book) {
-        addOption("__prompt", "Choose Book");
+        addOption("__prompt", "Choose Verse to Study");
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
-        dropdown.size = 1;
       } else if (!navigation.chapter) {
-        addOption("__back", "⬅ Back to Books");
-        Object.keys(bibleVerses[navigation.book]).forEach(chap =>
-          addOption(chap, `Chapter ${chap}`)
-        );
-        dropdown.size = Object.keys(bibleVerses[navigation.book]).length + 1;
+        addOption("__back", `${navigation.book}`);
+        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, `${chap}`));
       } else {
-        addOption("__back", "⬅ Back to Chapters");
+        addOption("__back", `${navigation.book} ${navigation.chapter}`);
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
-          addOption(verse, `Verse ${verse}`)
+          addOption(verse, `${verse}`)
         );
-        dropdown.size = Object.keys(bibleVerses[navigation.book][navigation.chapter]).length + 1;
       }
     }
 
@@ -110,28 +105,19 @@
           } else {
             navigation.book = null;
           }
-          updateDropdown();
-          return;
-        }
-
-        if (!navigation.book) {
+        } else if (!navigation.book) {
           navigation.book = value;
-          updateDropdown();
-          return;
-        }
-
-        if (!navigation.chapter) {
+        } else if (!navigation.chapter) {
           navigation.chapter = value;
-          updateDropdown();
-          return;
+        } else {
+          addVerse(navigation.book, navigation.chapter, value);
+          navigation = { book: null, chapter: null };
         }
 
-        // Final selection — add verse
-        addVerse(navigation.book, navigation.chapter, value);
-        navigation = { book: null, chapter: null };
         updateDropdown();
       });
 
+      // Allow Enter key to submit answer
       document.getElementById("userInput").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
           event.preventDefault();
@@ -143,12 +129,9 @@
     function addVerse(book, chapter, verse) {
       const ref = `${book} ${chapter}:${verse}`;
       if (!selectedVerses[ref]) {
-        selectedVerses[ref] = {
-          text: bibleVerses[book][chapter][verse],
-          correctCount: 0
-        };
-        document.getElementById("verseRefs").textContent =
-          Object.keys(selectedVerses).join(", ");
+        selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
+        const allRefs = Object.keys(selectedVerses).join(", ");
+        document.getElementById("verseRefs").textContent = allRefs;
       }
     }
 
@@ -158,9 +141,7 @@
     }
 
     function startQuiz() {
-      currentQueue = Object.entries(selectedVerses).filter(
-        ([_, data]) => data.correctCount < 3
-      );
+      currentQueue = Object.entries(selectedVerses).filter(([_, data]) => data.correctCount < 3);
       if (currentQueue.length === 0) {
         alert("Please add verses to study.");
         return;
@@ -171,8 +152,7 @@
 
     function showNextQuestion() {
       if (currentQueue.length === 0) {
-        document.getElementById("questionDisplay").textContent =
-          "Congratulations! You've mastered all verses.";
+        document.getElementById("questionDisplay").textContent = "Congratulations! You've mastered all verses.";
         document.getElementById("quizSection").classList.add("hidden");
         return;
       }
@@ -185,15 +165,14 @@
       const text = currentVerse[1].text;
 
       document.getElementById("userInput").value = "";
-      document.getElementById("questionDisplay").textContent =
-        mode === "copy" ? `${ref} ${text}` : ref;
+      document.getElementById("questionDisplay").textContent = mode === "copy" ? `${ref} ${text}` : ref;
     }
 
     function normalizeText(text) {
       return text
-        .replace(/[‘’]/g, "'")
-        .replace(/[“”]/g, '"')
-        .replace(/\s+/g, ' ')
+        .replace(/[‘’]/g, "'") // replace curly single quotes
+        .replace(/[“”]/g, '"') // replace curly double quotes
+        .replace(/\s+/g, ' ')  // normalize spaces
         .trim()
         .toLowerCase();
     }
@@ -223,3 +202,4 @@
   </script>
 </body>
 </html>
+
