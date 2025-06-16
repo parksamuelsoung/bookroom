@@ -5,7 +5,7 @@ const bibleVerses = {
     "3": { 
       "16": "For God so loved the world...", 
       "17": "For God did not send the Son..." 
-    } 
+    },
     "4": {
       "14": "But whoever drinks of the water that I will give him shall by no means thirst forever; but the water that I will give him will become in him a fountain of water springing up into eternal life."
   },
