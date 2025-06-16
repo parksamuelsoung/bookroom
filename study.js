@@ -8,6 +8,7 @@ const bibleVerses = {
     },
     "4": {
       "14": "But whoever drinks of the water that I will give him shall by no means thirst forever; but the water that I will give him will become in him a fountain of water springing up into eternal life."
+    }
   },
   "Acts": { "2": { "21": "And it shall be that everyone..." } },
   "Romans": { "10": { "12": "For there is no distinction...", "13": "For 'whoever calls...'" } },
