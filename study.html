@@ -79,8 +79,14 @@
       };
 
       if (!navigation.book) {
-        // Top level: list all books
-        addOption("__prompt", "Choose Verse to Study");
+        // Top level: books with disabled prompt option
+        const promptOption = document.createElement("option");
+        promptOption.value = "__prompt";
+        promptOption.textContent = "Choose Verse to Study";
+        promptOption.disabled = true;
+        promptOption.selected = true;
+        dropdown.appendChild(promptOption);
+
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
         // Inside a book: show back option and chapters
@@ -102,22 +108,22 @@
       dropdown.addEventListener("change", () => {
         const value = dropdown.value;
 
+        if (value === "__prompt") {
+          // Do nothing if prompt option selected
+          return;
+        }
+
         if (value === "__back") {
           if (navigation.chapter) {
-            // Go back from verse to chapter list
             navigation.chapter = null;
           } else {
-            // Go back from chapter to book list
             navigation.book = null;
           }
         } else if (!navigation.book) {
-          // Select a book
           navigation.book = value;
         } else if (!navigation.chapter) {
-          // Select a chapter
           navigation.chapter = value;
         } else {
-          // Select a verse - add to selected verses and reset navigation
           addVerse(navigation.book, navigation.chapter, value);
           navigation = { book: null, chapter: null };
         }
