@@ -1,6 +1,14 @@
 const bibleVerses = {
-  "Genesis": { "4": { "26": "And to Seth also a son was born..." } },
-  "Joel": { "2": { "32": "And everyone who calls on the name..." } },
+  "Genesis": { 
+    "4": { 
+      "26": "And to Seth also a son was born..." 
+    } 
+  },
+  "Joel": { 
+    "2": { 
+      "32": "And everyone who calls on the name..." 
+    } 
+  },
   "John": { 
     "3": { 
       "16": "For God so loved the world...", 
@@ -10,8 +18,17 @@ const bibleVerses = {
       "14": "But whoever drinks of the water that I will give him shall by no means thirst forever; but the water that I will give him will become in him a fountain of water springing up into eternal life."
     }
   },
-  "Acts": { "2": { "21": "And it shall be that everyone..." } },
-  "Romans": { "10": { "12": "For there is no distinction...", "13": "For 'whoever calls...'" } },
+  "Acts": { 
+    "2": { 
+      "21": "And it shall be that everyone..." 
+    } 
+  },
+  "Romans": { 
+    "10": { 
+      "12": "For there is no distinction...", 
+      "13": "For 'whoever calls...'" 
+    } 
+  },
   "Galatians": { 
     "1": { 
       "15": "But when it pleased God, who set me apart from my mother’s womb and called me through His grace,", 
