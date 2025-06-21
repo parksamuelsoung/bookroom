@@ -20,5 +20,13 @@ const bibleVerses = {
     "2": { 
       "20": "I am crucified with Christ; and it is no longer I who live, but it is Christ who lives in me; and the life which I now live in the flesh I live in faith, the faith of the Son of God, who loved me and gave Himself up for me."
     }
+  },
+  "Ephesians": { 
+    "3": { 
+      "9": "And to enlighten all that they may see what the economy of the mystery is, which throughout the ages has been hidden in God, who created all things," 
+    },
+    "5": { 
+      "32": "This mystery is great, but I speak with regard to Christ and the church."
+    }
   }
 };
