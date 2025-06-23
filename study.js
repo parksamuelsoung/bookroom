@@ -39,6 +39,11 @@ const bibleVerses = {
     }
   },
   "Ephesians": { 
+    "2": { 
+      "14": "For He Himself is our peace, He who has made both one and has broken down the middle wall of partition, the enmity,",
+      "15": "Abolishing in His flesh the law of the commandments in ordinances, that He might create the two in Himself into one new man, [so] making peace,",
+      "16": "And might reconcile both in one Body to God through the cross, having slain the enmity by it." 
+    },
     "3": { 
       "9": "And to enlighten all that they may see what the economy of the mystery is, which throughout the ages has been hidden in God, who created all things," 
     },
