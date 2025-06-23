@@ -79,7 +79,6 @@
       };
 
       if (!navigation.book) {
-        // Top level: books with disabled prompt option
         const promptOption = document.createElement("option");
         promptOption.value = "__prompt";
         promptOption.textContent = "Choose Verse to Study";
@@ -89,11 +88,9 @@
 
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        // Inside a book: show back option and chapters
         addOption("__back", navigation.book);
         Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, chap));
       } else {
-        // Inside a chapter: show back option and verses
         addOption("__back", `${navigation.book} ${navigation.chapter}`);
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
           addOption(verse, verse)
@@ -108,10 +105,7 @@
       dropdown.addEventListener("change", () => {
         const value = dropdown.value;
 
-        if (value === "__prompt") {
-          // Do nothing if prompt option selected
-          return;
-        }
+        if (value === "__prompt") return;
 
         if (value === "__back") {
           if (navigation.chapter) {
@@ -122,7 +116,12 @@
         } else if (!navigation.book) {
           navigation.book = value;
         } else if (!navigation.chapter) {
-          navigation.chapter = value;
+          if (value === navigation.book) {
+            // User clicked current book again — go back to book list
+            navigation.book = null;
+          } else {
+            navigation.chapter = value;
+          }
         } else {
           addVerse(navigation.book, navigation.chapter, value);
           navigation = { book: null, chapter: null };
@@ -131,7 +130,6 @@
         updateDropdown();
       });
 
-      // Allow Enter key to submit answer
       document.getElementById("userInput").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
           event.preventDefault();
@@ -184,9 +182,9 @@
 
     function normalizeText(text) {
       return text
-        .replace(/[‘’]/g, "'") // replace curly single quotes
-        .replace(/[“”]/g, '"') // replace curly double quotes
-        .replace(/\s+/g, ' ')  // normalize spaces
+        .replace(/[‘’]/g, "'")
+        .replace(/[“”]/g, '"')
+        .replace(/\s+/g, ' ')
         .trim()
         .toLowerCase();
     }
