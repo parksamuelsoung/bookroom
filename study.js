@@ -50,7 +50,7 @@ const bibleVerses = {
     "5": { 
       "32": "This mystery is great, but I speak with regard to Christ and the church."
     }
-  }
+  },
   "Colossians": { 
     "3": { 
       "10": "And have put on the new man, which is being renewed unto full knowledge according to the image of Him who created him,",
