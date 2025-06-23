@@ -61,10 +61,7 @@
     </div>
   </div>
 
-
-  
   <script>
-    
     let selectedVerses = {};
     let currentQueue = [];
     let currentVerse = null;
@@ -92,8 +89,8 @@
 
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        // Chapter list, with current book as selectable
-        addOption(navigation.book, navigation.book); // Do NOT mark as selected
+        // Chapter list, with book as back option
+        addOption(navigation.book, `← Back to Book List (${navigation.book})`);
         Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, chap));
       } else {
         // Verse list
@@ -114,26 +111,28 @@
         if (value === "__prompt") return;
 
         if (value === "__back") {
+          // Go back from verses to chapters
           if (navigation.chapter) {
             navigation.chapter = null;
           } else {
             navigation.book = null;
           }
         } else if (!navigation.book) {
+          // From book list to chapters
           navigation.book = value;
         } else if (!navigation.chapter) {
           if (value === navigation.book) {
-            // Go back to book list
+            // Clicking the same book again = go back to book list
             navigation.book = null;
           } else {
             navigation.chapter = value;
           }
         } else {
+          // From verse selection
           addVerse(navigation.book, navigation.chapter, value);
           navigation = { book: null, chapter: null };
         }
 
-        dropdown.selectedIndex = -1; // Allow re-selecting same option
         updateDropdown();
       });
 
