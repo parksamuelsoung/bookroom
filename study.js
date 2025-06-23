@@ -1,7 +1,7 @@
 const bibleVerses = {
   "Genesis": { 
-    "4": { 
-      "26": "And to Seth also a son was born..." 
+    "1": { 
+      "26": "And God said, Let Us make man in Our image, according to Our likeness; and let them have dominion over the fish of the sea and over the birds of heaven and over the cattle and over all the earth and over every creeping thing that creeps upon the earth." 
     } 
   },
   "Joel": { 
