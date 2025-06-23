@@ -79,6 +79,7 @@
       };
 
       if (!navigation.book) {
+        // Book list
         const promptOption = document.createElement("option");
         promptOption.value = "__prompt";
         promptOption.textContent = "Choose Verse to Study";
@@ -88,9 +89,11 @@
 
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        addOption("__back", navigation.book);
+        // Chapter list, with current book as selectable
+        addOption(navigation.book, navigation.book); // Do NOT mark as selected
         Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, chap));
       } else {
+        // Verse list
         addOption("__back", `${navigation.book} ${navigation.chapter}`);
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
           addOption(verse, verse)
@@ -117,7 +120,7 @@
           navigation.book = value;
         } else if (!navigation.chapter) {
           if (value === navigation.book) {
-            // User clicked current book again — go back to book list
+            // Go back to book list
             navigation.book = null;
           } else {
             navigation.chapter = value;
@@ -127,6 +130,7 @@
           navigation = { book: null, chapter: null };
         }
 
+        dropdown.selectedIndex = -1; // Allow re-selecting same option
         updateDropdown();
       });
 
