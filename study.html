@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Verse Study Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Book Chapter Verse Navigation</title>
   <style>
     select {
       margin: 1em 0;
@@ -13,59 +13,52 @@
   </style>
 </head>
 <body>
-  <h1>Verse Study Quiz</h1>
-  <select id="unifiedDropdown"></select>
+  <h1>Choose a Verse</h1>
+  <div id="dropdownContainer"></div>
 
   <script>
-    // 🔹 Dummy data for testing
+    // Dummy verse data
     const bibleVerses = {
       Ephesians: {
-        1: { 1: "Verse text 1:1", 2: "Verse text 1:2" },
-        2: { 1: "Verse text 2:1" }
+        1: { 1: "Eph 1:1", 2: "Eph 1:2" },
+        2: { 1: "Eph 2:1" }
       },
       Romans: {
-        1: { 1: "Romans 1:1", 2: "Romans 1:2" }
+        1: { 1: "Rom 1:1" }
       }
     };
 
     let navigation = { book: null, chapter: null };
 
-    function updateDropdown() {
-      const dropdown = document.getElementById("unifiedDropdown");
-      dropdown.innerHTML = "";
+    function buildDropdown() {
+      const container = document.getElementById("dropdownContainer");
+      container.innerHTML = ''; // clear old
 
-      const addOption = (value, label, selected = false) => {
-        const opt = document.createElement("option");
-        opt.value = value;
-        opt.textContent = label;
-        if (selected) opt.selected = true;
-        dropdown.appendChild(opt);
-      };
+      const select = document.createElement("select");
+      select.id = "unifiedDropdown";
 
       if (!navigation.book) {
-        addOption("__prompt", "Choose Book", true);
-        for (const book of Object.keys(bibleVerses)) {
-          addOption(book, book);
-        }
+        // Book list
+        select.append(new Option("Choose a book", "", true, true));
+        Object.keys(bibleVerses).forEach(book => {
+          select.append(new Option(book, book));
+        });
       } else if (!navigation.chapter) {
-        addOption("__back_books", "← Back to Book List", true);
-        for (const chapter of Object.keys(bibleVerses[navigation.book])) {
-          addOption(chapter, "Chapter " + chapter);
-        }
+        // Chapter list
+        select.append(new Option("← Back to book list", "__back_books"));
+        Object.keys(bibleVerses[navigation.book]).forEach(chap => {
+          select.append(new Option("Chapter " + chap, chap));
+        });
       } else {
-        addOption("__back_chapters", "← Back to Chapter List", true);
-        for (const verse of Object.keys(bibleVerses[navigation.book][navigation.chapter])) {
-          addOption(verse, "Verse " + verse);
-        }
+        // Verse list
+        select.append(new Option("← Back to chapters", "__back_chapters"));
+        Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse => {
+          select.append(new Option("Verse " + verse, verse));
+        });
       }
-    }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const dropdown = document.getElementById("unifiedDropdown");
-      updateDropdown();
-
-      dropdown.addEventListener("change", () => {
-        const value = dropdown.value;
+      select.addEventListener("change", () => {
+        const value = select.value;
 
         if (value === "__back_books") {
           navigation.book = null;
@@ -77,12 +70,17 @@
         } else if (!navigation.chapter) {
           navigation.chapter = value;
         } else {
-          alert(`You selected: ${navigation.book} ${navigation.chapter}:${value}`);
+          alert(`Selected: ${navigation.book} ${navigation.chapter}:${value}`);
+          navigation = { book: null, chapter: null }; // reset
         }
 
-        updateDropdown();
+        buildDropdown(); // rebuild every time
       });
-    });
+
+      container.appendChild(select);
+    }
+
+    document.addEventListener("DOMContentLoaded", buildDropdown);
   </script>
 </body>
 </html>
