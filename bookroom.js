@@ -75,12 +75,6 @@ function openBookOnEnter(event) {
   }
 }
 
-
-document.getElementById("oldTestamentSearch").addEventListener("keyup", function() {
-  filterBooks("oldTestamentSearch", 0);
-});
-
-
 var bookLinks = document.querySelectorAll(".dropdown-content a");
 for (var i = 0; i < bookLinks.length; i++) {
   bookLinks[i].addEventListener("click", function(event) {
