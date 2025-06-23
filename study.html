@@ -21,7 +21,7 @@
   </div>
 
   <div class="form-container">
-    <h1>Verse Study Quiz v4</h1>
+    <h1>Verse Study Quiz v6</h1>
 
     <!-- Mode Selection -->
     <select id="mode">
@@ -71,28 +71,26 @@
       const dropdown = document.getElementById("unifiedDropdown");
       dropdown.innerHTML = "";
 
-      const addOption = (value, text) => {
+      const addOption = (value, text, disabled = false, selected = false) => {
         const opt = document.createElement("option");
         opt.value = value;
         opt.textContent = text;
+        opt.disabled = disabled;
+        opt.selected = selected;
         dropdown.appendChild(opt);
       };
 
       if (!navigation.book) {
-        const promptOption = document.createElement("option");
-        promptOption.value = "__prompt";
-        promptOption.textContent = "Choose Verse to Study";
-        promptOption.disabled = true;
-        promptOption.selected = true;
-        dropdown.appendChild(promptOption);
-
+        // Book list
+        addOption("__prompt", "Choose Verse to Study", true, true);
         Object.keys(bibleVerses).forEach(book => addOption(book, book));
       } else if (!navigation.chapter) {
-        // Back option using book name
-        addOption(navigation.book, `← Back to Book List (${navigation.book})`);
+        // Chapter list with "back to books" option
+        addOption("__back_to_books", "← Back to Book List", false, true);
         Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, chap));
       } else {
-        addOption("__back", `${navigation.book} ${navigation.chapter}`);
+        // Verse list with "back to chapters" option
+        addOption("__back", `← Back to Chapters (${navigation.book})`, false, true);
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
           addOption(verse, verse)
         );
@@ -103,38 +101,19 @@
       const dropdown = document.getElementById("unifiedDropdown");
       updateDropdown();
 
-      let lastSelectedValue = null;
-
-      dropdown.addEventListener("click", () => {
-        lastSelectedValue = dropdown.value;
-      });
-
       dropdown.addEventListener("change", () => {
         const value = dropdown.value;
-
-        // Handle re-selecting same book to go back
-        if (!navigation.chapter && value === navigation.book && value === lastSelectedValue) {
-          navigation.book = null;
-          updateDropdown();
-          return;
-        }
 
         if (value === "__prompt") return;
 
         if (value === "__back") {
-          if (navigation.chapter) {
-            navigation.chapter = null;
-          } else {
-            navigation.book = null;
-          }
+          navigation.chapter = null;
+        } else if (value === "__back_to_books") {
+          navigation.book = null;
         } else if (!navigation.book) {
           navigation.book = value;
         } else if (!navigation.chapter) {
-          if (value === navigation.book) {
-            navigation.book = null;
-          } else {
-            navigation.chapter = value;
-          }
+          navigation.chapter = value;
         } else {
           addVerse(navigation.book, navigation.chapter, value);
           navigation = { book: null, chapter: null };
