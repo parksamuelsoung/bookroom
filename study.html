@@ -3,84 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book Chapter Verse Navigation</title>
+  <title>Verse Navigator</title>
   <style>
     select {
-      margin: 1em 0;
+      margin: 1em;
       padding: 0.5em;
       font-size: 1em;
     }
   </style>
 </head>
 <body>
-  <h1>Choose a Verse</h1>
-  <div id="dropdownContainer"></div>
+  <h1>Verse Navigator</h1>
+  <select id="dropdown"></select>
+  <p id="output"></p>
 
   <script>
-    // Dummy verse data
     const bibleVerses = {
-      Ephesians: {
-        1: { 1: "Eph 1:1", 2: "Eph 1:2" },
-        2: { 1: "Eph 2:1" }
+      "Genesis": { "1": { "26": "Let Us make man..." } },
+      "Joel": { "2": { "32": "Everyone who calls..." } },
+      "John": {
+        "3": { "16": "For God so loved...", "17": "For God did not send..." },
+        "4": { "14": "Whoever drinks of the water..." }
       },
-      Romans: {
-        1: { 1: "Rom 1:1" }
+      "Acts": { "2": { "21": "Everyone who calls..." } },
+      "Romans": { "10": { "12": "No distinction...", "13": "Whoever calls..." } },
+      "Galatians": {
+        "1": { "15": "When it pleased God...", "16": "To reveal His Son..." },
+        "2": { "20": "I am crucified with Christ..." }
+      },
+      "Ephesians": {
+        "2": { "14": "He is our peace", "15": "Abolishing in His flesh...", "16": "Reconcile both..." },
+        "3": { "9": "See the economy of the mystery..." },
+        "5": { "32": "This mystery is great..." }
+      },
+      "Colossians": {
+        "3": { "10": "Put on the new man...", "11": "Christ is all and in all." }
       }
     };
 
-    let navigation = { book: null, chapter: null };
+    let nav = { book: null, chapter: null };
 
-    function buildDropdown() {
-      const container = document.getElementById("dropdownContainer");
-      container.innerHTML = ''; // clear old
+    const dropdown = document.getElementById("dropdown");
+    const output = document.getElementById("output");
 
-      const select = document.createElement("select");
-      select.id = "unifiedDropdown";
+    function renderDropdown() {
+      dropdown.innerHTML = "";
 
-      if (!navigation.book) {
+      if (!nav.book) {
         // Book list
-        select.append(new Option("Choose a book", "", true, true));
+        dropdown.append(new Option("Choose a Book", "", true, true));
         Object.keys(bibleVerses).forEach(book => {
-          select.append(new Option(book, book));
+          dropdown.append(new Option(book, book));
         });
-      } else if (!navigation.chapter) {
+      } else if (!nav.chapter) {
         // Chapter list
-        select.append(new Option("← Back to book list", "__back_books"));
-        Object.keys(bibleVerses[navigation.book]).forEach(chap => {
-          select.append(new Option("Chapter " + chap, chap));
+        dropdown.append(new Option("← Back to Book List", "__back_books"));
+        Object.keys(bibleVerses[nav.book]).forEach(chap => {
+          dropdown.append(new Option("Chapter " + chap, chap));
         });
       } else {
         // Verse list
-        select.append(new Option("← Back to chapters", "__back_chapters"));
-        Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse => {
-          select.append(new Option("Verse " + verse, verse));
+        dropdown.append(new Option("← Back to Chapter List", "__back_chapters"));
+        Object.keys(bibleVerses[nav.book][nav.chapter]).forEach(verse => {
+          dropdown.append(new Option("Verse " + verse, verse));
         });
       }
-
-      select.addEventListener("change", () => {
-        const value = select.value;
-
-        if (value === "__back_books") {
-          navigation.book = null;
-          navigation.chapter = null;
-        } else if (value === "__back_chapters") {
-          navigation.chapter = null;
-        } else if (!navigation.book) {
-          navigation.book = value;
-        } else if (!navigation.chapter) {
-          navigation.chapter = value;
-        } else {
-          alert(`Selected: ${navigation.book} ${navigation.chapter}:${value}`);
-          navigation = { book: null, chapter: null }; // reset
-        }
-
-        buildDropdown(); // rebuild every time
-      });
-
-      container.appendChild(select);
     }
 
-    document.addEventListener("DOMContentLoaded", buildDropdown);
+    dropdown.addEventListener("change", () => {
+      const val = dropdown.value;
+
+      if (val === "__back_books") {
+        nav.book = null;
+        nav.chapter = null;
+        output.textContent = "";
+      } else if (val === "__back_chapters") {
+        nav.chapter = null;
+        output.textContent = "";
+      } else if (!nav.book) {
+        nav.book = val;
+      } else if (!nav.chapter) {
+        nav.chapter = val;
+      } else {
+        // Verse selected
+        const verseText = bibleVerses[nav.book][nav.chapter][val];
+        output.textContent = `${nav.book} ${nav.chapter}:${val} — ${verseText}`;
+        // Reset to allow multiple selections
+        nav = { book: null, chapter: null };
+      }
+
+      renderDropdown();
+    });
+
+    // Initialize
+    renderDropdown();
   </script>
 </body>
 </html>
