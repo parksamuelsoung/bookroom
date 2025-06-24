@@ -13,7 +13,7 @@
   </div>
 
   <div class="form-container">
-    <h1>Verse Study Quiz v3</h1>
+    <h1>Verse Study Quiz v4</h1>
 
     <!-- Mode Selection -->
     <select id="mode">
@@ -80,12 +80,12 @@
           list.appendChild(createItem(book, book, "book"));
         });
       } else if (!navigation.chapter) {
-        list.appendChild(createItem("← Back to Books", "__backBook", "nav"));
+        list.appendChild(createItem("${chapter}", "__backBook", "nav"));
         Object.keys(bibleVerses[navigation.book]).forEach(chapter => {
           list.appendChild(createItem(`Chapter ${chapter}`, chapter, "chapter"));
         });
       } else {
-        list.appendChild(createItem("← Back to Chapters", "__backChapter", "nav"));
+        list.appendChild(createItem("${chapter} ${verse}", "__backChapter", "nav"));
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse => {
           list.appendChild(createItem(`Verse ${verse}`, verse, "verse"));
         });
@@ -94,23 +94,6 @@
       container.appendChild(list);
     }
 
-    function handleCustomSelect(e) {
-      const type = e.currentTarget.dataset.type;
-      const value = e.currentTarget.dataset.value;
-
-      if (type === "book") {
-        navigation.book = value;
-      } else if (type === "chapter") {
-        navigation.chapter = value;
-      } else if (type === "verse") {
-        addVerse(navigation.book, navigation.chapter, value);
-        navigation = { book: null, chapter: null };
-        document.getElementById("customDropdown").classList.add("hidden");
-      } else if (value === "__backBook") {
-        navigation.book = null;
-      } else if (value === "__backChapter") {
-        navigation.chapter = null;
-      }
 
       renderCustomDropdown();
     }
