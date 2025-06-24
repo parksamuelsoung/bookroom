@@ -5,15 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Verse Study Quiz</title>
   <link rel="stylesheet" href="bookroom.css" />
-  <script src="study.js" defer></script>
-  <script src="bookroom.js" defer></script>
-  <style>
-    select {
-      margin: 1em 0;
-      padding: 0.5em;
-      font-size: 1em;
-    }
-  </style>
+  <script src="study.js" defer></script> <!-- Contains bibleVerses -->
 </head>
 <body>
   <div class="navbar">
@@ -21,7 +13,7 @@
   </div>
 
   <div class="form-container">
-    <h1>Verse Study Quiz v4</h1>
+    <h1>Verse Study Quiz v1</h1>
 
     <!-- Mode Selection -->
     <select id="mode">
@@ -30,10 +22,8 @@
       <option value="memorize">Memorize</option>
     </select>
 
-    <!-- Dropdown Container -->
-    <div id="dropdownContainer">
-      <select id="unifiedDropdown"></select>
-    </div>
+    <!-- Custom Dropdown Navigation -->
+    <div id="customDropdown" class="custom-dropdown"></div>
 
     <!-- Selected Verses -->
     <div class="verse-list" id="selectedVersesList">
@@ -67,83 +57,59 @@
     let currentVerse = null;
     let navigation = { book: null, chapter: null };
 
-    function updateDropdown() {
-      const dropdown = document.getElementById("unifiedDropdown");
-      dropdown.innerHTML = "";
+    function renderCustomDropdown() {
+      const container = document.getElementById("customDropdown");
+      container.innerHTML = "";
 
-      const addOption = (value, text) => {
-        const opt = document.createElement("option");
-        opt.value = value;
-        opt.textContent = text;
-        dropdown.appendChild(opt);
+      const list = document.createElement("ul");
+
+      const createItem = (label, value, type) => {
+        const li = document.createElement("li");
+        li.textContent = label;
+        li.dataset.value = value;
+        li.dataset.type = type;
+        li.addEventListener("click", handleCustomSelect);
+        return li;
       };
 
       if (!navigation.book) {
-        // Book list
-        const promptOption = document.createElement("option");
-        promptOption.value = "__prompt";
-        promptOption.textContent = "Choose Verse to Study";
-        promptOption.disabled = true;
-        promptOption.selected = true;
-        dropdown.appendChild(promptOption);
-
-        Object.keys(bibleVerses).forEach(book => addOption(book, book));
+        Object.keys(bibleVerses).forEach(book => {
+          list.appendChild(createItem(book, book, "book"));
+        });
       } else if (!navigation.chapter) {
-        // Chapter list, with current book as selectable
-        addOption(navigation.book, navigation.book); // option to go back to book list
-        Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, chap));
+        list.appendChild(createItem("← Back to Books", "__backBook", "nav"));
+        Object.keys(bibleVerses[navigation.book]).forEach(chapter => {
+          list.appendChild(createItem(`Chapter ${chapter}`, chapter, "chapter"));
+        });
       } else {
-        // Verse list
-        addOption("__back", `${navigation.book} ${navigation.chapter}`);
-        Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
-          addOption(verse, verse)
-        );
+        list.appendChild(createItem("← Back to Chapters", "__backChapter", "nav"));
+        Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse => {
+          list.appendChild(createItem(`Verse ${verse}`, verse, "verse"));
+        });
       }
+
+      container.appendChild(list);
     }
 
-    document.addEventListener("DOMContentLoaded", () => {
-      const dropdown = document.getElementById("unifiedDropdown");
-      updateDropdown();
+    function handleCustomSelect(e) {
+      const type = e.currentTarget.dataset.type;
+      const value = e.currentTarget.dataset.value;
 
-      dropdown.addEventListener("change", () => {
-        const value = dropdown.value;
+      if (type === "book") {
+        navigation.book = value;
+      } else if (type === "chapter") {
+        navigation.chapter = value;
+      } else if (type === "verse") {
+        addVerse(navigation.book, navigation.chapter, value);
+        navigation = { book: null, chapter: null };
+      } else if (value === "__backBook") {
+        navigation.book = null;
+      } else if (value === "__backChapter") {
+        navigation.chapter = null;
+      }
 
-        if (value === "__prompt") return;
-
-        if (value === "__back") {
-          if (navigation.chapter) {
-            navigation.chapter = null;
-          } else {
-            navigation.book = null;
-          }
-        } else if (!navigation.book) {
-          navigation.book = value;
-        } else if (!navigation.chapter) {
-          if (value === navigation.book) {
-            // Go back to book list
-            navigation.book = null;
-          } else {
-            navigation.chapter = value;
-          }
-        } else {
-          addVerse(navigation.book, navigation.chapter, value);
-          navigation = { book: null, chapter: null };
-        }
-
-        dropdown.selectedIndex = -1; // Allow re-selecting same option
-        updateDropdown();
-      });
-
-      setTimeout(() => dropdown.focus(), 0);
-
-
-      document.getElementById("userInput").addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          submitAnswer();
-        }
-      });
-    });
+      renderCustomDropdown();
+    }
 
     function addVerse(book, chapter, verse) {
       const ref = `${book} ${chapter}:${verse}`;
@@ -188,12 +154,7 @@
     }
 
     function normalizeText(text) {
-      return text
-        .replace(/[‘’]/g, "'")
-        .replace(/[“”]/g, '"')
-        .replace(/\s+/g, ' ')
-        .trim()
-        .toLowerCase();
+      return text.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim().toLowerCase();
     }
 
     function submitAnswer() {
@@ -206,8 +167,7 @@
         if (selectedVerses[ref].correctCount >= 3) {
           currentQueue = currentQueue.filter(([key]) => key !== ref);
         }
-        document.getElementById("status").textContent =
-          `Correct! (${ref}) ${selectedVerses[ref].correctCount}/3`;
+        document.getElementById("status").textContent = `Correct! (${ref}) ${selectedVerses[ref].correctCount}/3`;
       } else {
         document.getElementById("status").textContent = `Incorrect. (${ref})`;
       }
@@ -218,6 +178,17 @@
     function refreshPage() {
       window.location.reload();
     }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCustomDropdown();
+
+      document.getElementById("userInput").addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          submitAnswer();
+        }
+      });
+    });
   </script>
 </body>
 </html>
