@@ -43,6 +43,7 @@ body {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   margin: 2em auto;
   text-align: center;
+  position: relative;
 }
 
 select,
@@ -83,12 +84,17 @@ button:hover {
   margin-top: 2em;
 }
 
-/* Custom dropdown styling */
+/* === Custom dropdown styling === */
 #customDropdownContainer {
   position: relative;
-  max-width: 400px;
+  width: 30%;          /* 30% of form container width */
+  height: 30%;         /* 30% of form container height */
+  min-width: 200px;    /* optional minimum width */
+  min-height: 150px;   /* optional minimum height */
   margin: 1em auto;
   text-align: left;
+  display: flex;
+  flex-direction: column;
 }
 
 #dropdownToggle {
@@ -100,6 +106,7 @@ button:hover {
   background-color: white;
   cursor: pointer;
   text-align: left;
+  flex-shrink: 0; /* prevent shrinking */
 }
 
 #customDropdown {
@@ -107,11 +114,13 @@ button:hover {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 6px;
-  max-height: 300px;
-  overflow-y: auto;
+  flex-grow: 1;
+  max-height: 100%;
+  overflow-y: auto;    /* vertical scrollbar if content exceeds height */
+  overflow-x: hidden;  /* no horizontal scrollbar */
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   z-index: 100;
-  position: absolute;
+  position: relative;  /* contained inside parent */
   width: 100%;
 }
 
@@ -135,4 +144,12 @@ button:hover {
 
 .hidden {
   display: none;
+}
+
+/* Responsive tweaks (optional) */
+@media (max-width: 600px) {
+  #customDropdownContainer {
+    width: 80%;
+    height: 200px; /* fixed smaller height on mobile */
+  }
 }
