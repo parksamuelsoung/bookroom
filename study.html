@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Verse Study Quiz</title>
   <link rel="stylesheet" href="bookroom.css" />
-  <script src="study.js" defer></script> <!-- your bibleVerses data -->
+  <script src="study.js" defer></script> <!-- Your bibleVerses data -->
 </head>
 <body>
   <div class="navbar">
@@ -24,8 +24,8 @@
 
     <!-- Custom Dropdown with toggle button -->
     <div id="customDropdownContainer">
-      <button id="dropdownToggle" type="button">Select Verse(s)</button>
-      <div id="customDropdown" class="custom-dropdown hidden"></div>
+      <button id="dropdownToggle" type="button">Choose Verse to Study ▼</button>
+      <div id="customDropdown" class="hidden"></div>
     </div>
 
     <!-- Selected Verses -->
@@ -184,8 +184,6 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      // Dropdown initially closed, so no render here
-
       const dropdown = document.getElementById("customDropdown");
       const toggleBtn = document.getElementById("dropdownToggle");
 
