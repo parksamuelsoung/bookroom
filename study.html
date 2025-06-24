@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Verse Study Quiz</title>
   <link rel="stylesheet" href="bookroom.css" />
-  <script src="study.js" defer></script> <!-- Contains bibleVerses -->
+  <script src="study.js" defer></script> <!-- your bibleVerses data -->
 </head>
 <body>
   <div class="navbar">
@@ -13,7 +13,7 @@
   </div>
 
   <div class="form-container">
-    <h1>Verse Study Quiz v1</h1>
+    <h1>Verse Study Quiz v3</h1>
 
     <!-- Mode Selection -->
     <select id="mode">
@@ -22,8 +22,11 @@
       <option value="memorize">Memorize</option>
     </select>
 
-    <!-- Custom Dropdown Navigation -->
-    <div id="customDropdown" class="custom-dropdown"></div>
+    <!-- Custom Dropdown with toggle button -->
+    <div id="customDropdownContainer">
+      <button id="dropdownToggle" type="button">Choose Verse to Study ▼</button>
+      <div id="customDropdown" class="custom-dropdown hidden"></div>
+    </div>
 
     <!-- Selected Verses -->
     <div class="verse-list" id="selectedVersesList">
@@ -102,6 +105,7 @@
       } else if (type === "verse") {
         addVerse(navigation.book, navigation.chapter, value);
         navigation = { book: null, chapter: null };
+        document.getElementById("customDropdown").classList.add("hidden");
       } else if (value === "__backBook") {
         navigation.book = null;
       } else if (value === "__backChapter") {
@@ -180,7 +184,20 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      renderCustomDropdown();
+      // Dropdown initially closed, so no render here
+
+      const dropdown = document.getElementById("customDropdown");
+      const toggleBtn = document.getElementById("dropdownToggle");
+
+      toggleBtn.addEventListener("click", () => {
+        if (dropdown.classList.contains("hidden")) {
+          navigation = { book: null, chapter: null };
+          renderCustomDropdown();
+          dropdown.classList.remove("hidden");
+        } else {
+          dropdown.classList.add("hidden");
+        }
+      });
 
       document.getElementById("userInput").addEventListener("keydown", function(event) {
         if (event.key === "Enter") {
