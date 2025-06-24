@@ -89,8 +89,6 @@ button:hover {
   position: relative;
   width: 30%;          /* 30% of form container width */
   height: 30%;         /* 30% of form container height */
-  min-width: 200px;    /* optional minimum width */
-  min-height: 150px;   /* optional minimum height */
   margin: 1em auto;
   text-align: left;
   display: flex;
