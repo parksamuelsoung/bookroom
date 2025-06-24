@@ -44,6 +44,7 @@ body {
   margin: 2em auto;
   text-align: center;
   position: relative;
+  min-height: 400px; /* Fix to prevent collapse and ensure dropdown visibility */
 }
 
 select,
@@ -148,6 +149,6 @@ button:hover {
 @media (max-width: 600px) {
   #customDropdownContainer {
     width: 80%;
-    height: 200px; /* fixed smaller height on mobile */
+    height: 200px;
   }
 }
