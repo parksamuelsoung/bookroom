@@ -232,6 +232,30 @@ button:hover {
   border: none; 
   margin: 0;
 }
+
+
+
+.custom-dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 1em 0;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.custom-dropdown li {
+  padding: 0.6em 1em;
+  cursor: pointer;
+}
+
+.custom-dropdown li:hover {
+  background-color: #e9f2ff;
+}
+
   
 
 }
