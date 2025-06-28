@@ -29,10 +29,13 @@ function 메시지() {
 
 const textarea = document.getElementById('userInput');
 textarea.addEventListener('input', autoResize);
-function autoResize() {
-  this.style.height = 'auto'; // Reset height
-  this.style.height = this.scrollHeight + 'px'; // Set to scroll height
+
+function autoResize(event) {
+  const el = event.target;
+  el.style.height = 'auto'; // Reset height
+  el.style.height = el.scrollHeight + 'px'; // Set to scroll height
 }
+
 
 
 
