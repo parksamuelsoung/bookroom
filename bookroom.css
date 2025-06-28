@@ -9,40 +9,84 @@ body {
   font-family: Arial, sans-serif;
   background-color: #f7f7f7;
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* So navbar sits above content */
   align-items: center;
-  min-height: 100vh;
+  min-height: 100vh; /* Keep vh for vertical responsiveness */
 }
 
-/* === Login Form Container === */
+/* === Navbar Styles === */
+.navbar {
+  width: 100%;
+  background-color: #f8f9fa;
+  padding: 1em 2em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 0.125em 0.3125em rgba(0, 0, 0, 0.1); /* 2px 5px */
+}
+
+.logo {
+  font-size: 1.75em;
+  font-weight: bold;
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.logo:hover {
+  color: #0056b3;
+}
+
+/* === Form Container === */
 .form-container {
   width: 90%;
-  max-width: 400px;
-  background-color: white;
-  padding: 2em;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 800px; /* Wider on desktop, like mobile scaling */
+  background: white;
+  padding: 1.5em;
+  border-radius: 0.625em; /* 10px */
+  box-shadow: 0 0.25em 0.625em rgba(0, 0, 0, 0.1); /* 4px 10px */
+  margin: 2em auto;
   text-align: center;
+  box-sizing: border-box;
 }
+
+/* === Form === */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 0;         /* Remove extra padding */
+  margin: 0;          /* Remove margin that was narrowing it */
+  width: 100%;        /* Make form take full width of container */
+  box-sizing: border-box;
+}
+
 
 /* === Input Fields === */
 input[type="text"],
-input[type="password"] {
+input[type="email"],
+input[type="password"],
+select,
+textarea {
   width: 100%;
-  padding: 0.75em 1em;
-  margin-top: 1em;
+  padding: 0.6em 1em;
+  border: 0.063em solid #ccc; /* 1px */
+  border-radius: 0.375em; /* 6px */
+  background-color: white;
+  color: #222;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  line-height: 1.4;
+  margin-top: 1em;
 }
 
 /* === Button === */
 button {
-  margin-top: 1.5em;
-  padding: 0.75em 1.5em;
+  display: block;
+  margin: 1.5em auto 0;
+  padding: 0.6em 1.5em;
   font-size: 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 0.375em; /* 6px */
   background-color: #007bff;
   color: white;
   cursor: pointer;
@@ -51,4 +95,143 @@ button {
 
 button:hover {
   background-color: #0056b3;
+}
+
+.button-row {
+  display: flex;
+  gap: 1em;
+  justify-content: center;
+  margin-top: 1em;
+}
+
+.button-row button {
+  display: inline-block;
+  margin: 0;
+}
+
+
+
+/* === Highlighted List === */
+.verse-list {
+  text-align: left;
+  margin-top: 2em;
+}
+
+.verse-list ul {
+  list-style-type: disc;
+  margin-left: 1.5em;
+}
+
+.highlighted {
+  background-color: rgba(0, 123, 255, 0.1); /* Light blue wash */
+  color: #0056b3;                             /* Darker contrasting blue */
+  backdrop-filter: none;                      /* Optional: remove blur */
+}
+
+
+/* === Responsive Tweaks === */
+@media (max-width: 37.5em) { /* 600px */
+  input,
+  button,
+  select,
+  textarea {
+    font-size: 0.9rem;
+    padding: 0.5em 1em;
+  }
+}
+
+@media (min-width: 56.3125em) { /* 901px */
+  input,
+  button,
+  select,
+  textarea {
+    font-size: 1.1rem;
+    padding: 0.75em 1.5em;
+  }
+
+
+
+
+
+
+
+  
+
+
+  
+/* Songs */
+/* Singing with Grace */
+
+.dropdown-content1 {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  width: 80%;
+  height: 80%;
+  overflow-y: auto;
+  overflow-x: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content2 {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  width: 80%;
+  height: 80%;
+  overflow-y: auto;
+  overflow-x: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+
+.dropdown-content1 input[type="text"] {
+  width: 80%;
+  height: 80%;
+}
+
+.dropdown-content2 input[type="text"] {
+  width: 80%;
+  height: 80%;
+}
+
+.dropdown-content1 a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropdown-content2 a {
+  color: black;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dropbtn-search {
+  height: 80%;
+  width: 80%;
+}
+
+.dropbtn-검색 {
+  height: 80%;
+  width: 80%;
+}
+
+.song-content {
+  font-size: 0.9rem;
+  width: 80%; 
+  height: 80%; 
+  border: none; 
+  margin: 0;
+}
+  
+
 }
