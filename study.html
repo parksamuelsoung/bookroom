@@ -94,7 +94,7 @@
         Object.keys(bibleVerses[navigation.book]).forEach(chap => addOption(chap, chap));
       } else {
         // Verse list
-        addOption("__back", ${navigation.book} ${navigation.chapter});
+        addOption("__back", `${navigation.book} ${navigation.chapter}`);
         Object.keys(bibleVerses[navigation.book][navigation.chapter]).forEach(verse =>
           addOption(verse, verse)
         );
