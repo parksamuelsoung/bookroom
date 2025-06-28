@@ -143,7 +143,7 @@
     });
 
     function addVerse(book, chapter, verse) {
-      const ref = ${book} ${chapter}:${verse};
+      const ref = `${book} ${chapter}:${verse}`;
       if (!selectedVerses[ref]) {
         selectedVerses[ref] = { text: bibleVerses[book][chapter][verse], correctCount: 0 };
         const allRefs = Object.keys(selectedVerses).join(", ");
