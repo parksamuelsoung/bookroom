@@ -181,7 +181,7 @@
       const text = currentVerse[1].text;
 
       document.getElementById("userInput").value = "";
-      document.getElementById("questionDisplay").textContent = mode === "copy" ? ${ref} ${text} : ref;
+      document.getElementById("questionDisplay").textContent = mode === "copy" ? `${ref} ${text}`;
     }
 
     function normalizeText(text) {
