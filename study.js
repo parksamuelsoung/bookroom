@@ -56,5 +56,13 @@ const bibleVerses = {
       "10": "And have put on the new man, which is being renewed unto full knowledge according to the image of Him who created him,",
       "11": "Where there cannot be Greek and Jew, circumcision and uncircumcision, barbarian, Scythian, slave, free man, but Christ is all and in all."
     }
+  },
+  "1 John": { 
+    "3": { 
+      "9": "Everyone who has been begotten of God does not practice sin, because His seed abides in him; and he cannot sin, because he has been begotten of God."
+    },
+    "5": { 
+      "1": "Everyone who has been begotten of God does not practice sin, because His seed abides in him; and he cannot sin, because he has been begotten of God."
+    }
   }
 };
