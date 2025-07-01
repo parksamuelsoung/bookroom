@@ -62,7 +62,7 @@ const bibleVerses = {
       "9": "Everyone who has been begotten of God does not practice sin, because His seed abides in him; and he cannot sin, because he has been begotten of God."
     },
     "5": { 
-      "1": "Everyone who has been begotten of God does not practice sin, because His seed abides in him; and he cannot sin, because he has been begotten of God."
+      "1": "Everyone who believes that Jesus is the Christ has been begotten of God, and everyone who loves Him who has begotten loves him also who has been begotten of Him."
     }
   }
 };
