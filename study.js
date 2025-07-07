@@ -4,7 +4,7 @@ const bibleVerses = {
       "26": "And God said, Let Us make man in Our image, according to Our likeness; and let them have dominion over the fish of the sea and over the birds of heaven and over the cattle and over all the earth and over every creeping thing that creeps upon the earth." 
     } 
   },
-  "Psalm": { 
+  "Psalms": { 
     "36": { 
       "8": "They are saturated with the fatness of Your house, / And You cause them to drink of the river of Your pleasures.",
       "9": "For with You is the fountain of life; / In Your light we see light."
